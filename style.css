@@ -1,0 +1,17 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Baloo Thambi 2", sans-serif;
+}
+canvas {
+  display: block;
+/*   background: hsla(0, 0%, 24%, 1);
+
+background: linear-gradient(0deg, hsla(0, 0%, 24%, 1) 0%, hsla(203, 20%, 33%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(0, 0%, 24%, 1) 0%, hsla(203, 20%, 33%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(0, 0%, 24%, 1) 0%, hsla(203, 20%, 33%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#3C3C3C", endColorstr="#445966", GradientType=1 ); */
+}
