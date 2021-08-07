@@ -14,7 +14,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight); // this makes a canvas that takes up the window width of the webpage its on
   rectMode(CORNERS); // corners mode allows you to make rectangles based on its top left and bottom right corners. This is just preference
   angleMode(DEGREES); // the collision calculations are done much easier when using degrees vs radians
-  
+
   context2d = canvas.getContext('2d');
 }
 
@@ -24,7 +24,7 @@ function draw() {
   stateMachine(currentState);
 }
 
-function stateMachine (currentState) {
+function stateMachine(currentState) {
   currentState.update();
   // try {
   //   currentState.update();

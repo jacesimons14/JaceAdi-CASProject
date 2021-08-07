@@ -1,5 +1,5 @@
 class button {
-  constructor (threshold = 20, gasConfig) {
+  constructor(threshold = 20, gasConfig) {
     this.threshold = threshold;
     this.buttonSize = globalConfig.buttonSize;
     this.config = gasConfig;
@@ -7,16 +7,16 @@ class button {
 }
 
 class debugToggle extends button {
-  constructor (threshold, gasConfig) {
+  constructor(threshold, gasConfig) {
     super(threshold, gasConfig);
     this.x = 1530;
     this.y = 850;
   }
-  
-  clicked () {
-    let distance = dist (mouseX, mouseY, this.x+this.buttonSize/2, this.y+this.buttonSize/2);
-      if (distance <= this.threshold) {
-        this.config.debug = !this.config.debug;
+
+  clicked() {
+    let distance = dist(mouseX, mouseY, this.x + this.buttonSize / 2, this.y + this.buttonSize / 2);
+    if (distance <= this.threshold) {
+      this.config.debug = !this.config.debug;
     }
   }
 
@@ -25,12 +25,12 @@ class debugToggle extends button {
     noStroke();
     if (this.config.debug) { // toggled on
       globalConfig.buttonOn.setAlpha(150);
-      fill (globalConfig.buttonOn);
+      fill(globalConfig.buttonOn);
     }
     else { // toggled off
-      fill (globalConfig.buttonOff);
+      fill(globalConfig.buttonOff);
     }
-    rect (this.x, this.y, this.x+this.config.buttonSize, this.y+this.config.buttonSize, 10);
+    rect(this.x, this.y, this.x + this.config.buttonSize, this.y + this.config.buttonSize, 10);
   }
 }
 
@@ -38,7 +38,7 @@ class debugToggle extends button {
 //   x : Buttons.lightParticleInjectionButtonX,
 //   y : Buttons.lightParticleInjectionButtonY,
 //   threshold : 20,
-  
+
 //   clicked () {
 //     let distance = dist (mouseX, mouseY, this.x, this.y);
 //       if (distance <= this.threshold) {
@@ -68,7 +68,7 @@ class debugToggle extends button {
 //   x : Buttons.heavyParticleInjectionButtonX,
 //   y : Buttons.heavyParticleInjectionButtonY,
 //   threshold : 22.5,
-  
+
 //   clicked () {
 //     let distance = dist (mouseX, mouseY, this.x, this.y);
 //       if (distance <= this.threshold) {
@@ -275,7 +275,7 @@ class debugToggle extends button {
 // const thermometer = {
 //   x: Buttons.therBulbCenterX-2.5, // 35
 //   y: Buttons.therBulbCenterY-46.5, // 178.5
-  
+
 //   threshold: 50,
 //   clicked () {
 //     let distance = dist(mouseX, mouseY, this.x, this.y);
