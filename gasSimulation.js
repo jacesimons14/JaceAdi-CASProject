@@ -5,14 +5,14 @@ let gasConfig;
 let gasUI;
 
 class gasSimulation {
-  constructor () {
-    gasUI = new gasSimUI();
-    gasConfig = new gasSimConfig();
+  constructor (context2d) {
+    this.gasConfig = new gasSimConfig();
+    this.gasConfig.initialize();
+    this.gasUI = new gasSimUI(this.gasConfig, context2d);
   }
   
   update () {
-    gasConfig.update();
     doCollisions(particles);
-    //gasUI.show();
+    this.gasUI.show();
   }
 }

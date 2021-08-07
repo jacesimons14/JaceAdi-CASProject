@@ -15,9 +15,9 @@ class gasSimConfig {
     
     this.boxX = 700;
     this.boxY = 150;
+    this.boxHeight = windowHeight - 250;
     
     this.debug = false;
-    
     
     this.l = color("#37E6D8");
     this.ld = color("#014c59");
@@ -27,7 +27,7 @@ class gasSimConfig {
     this.therDark = color('#590000');
   }
 
-  update () {
+  initialize () {
     if (this.temperatureK >= 1380) {
       this.therOffset = 112; // keeps the liquid in the thermometer from exceeding the top of the thermometer
     } else if (this.temperatureK <= 0) {

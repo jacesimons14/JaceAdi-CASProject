@@ -11,7 +11,7 @@ function doCollisions(arr) {
       //let dis = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y); // calculate distance between centers of each particle
       let combinedRadii = p1.getRad() + p2.getRad(); // calculate sum of the two radii
       let distance = p5.Vector.dist(p1.position, p2.position);
-      if (distance <= combinedRadii) {        
+      if (distance <= combinedRadii) {
         // if the distance between the two is less than the sum of their radii, they are intersecting
         // variables for physics equations
         let t1 = p1.velocity.heading();
@@ -30,17 +30,17 @@ function doCollisions(arr) {
 
         // particle 1
         let p1x = (p1.velocity.x * cos(t1 - phi) * (m1 - m2) + (2 * m2 * p2.velocity.x * cos(t2 - phi)) / (m1 + m2)) * cos(phi) + p1.velocity.x * sin(t1 - phi * cos(phi + 90));
-        let p1y = (p1.velocity.y * cos(t1 - phi) * (m1 - m2) + (2 * m2 * p2.velocity  * cos(t2 - phi)) / (m1 + m2)) * sin(phi) + p1.velocity.y * sin(t1 - phi * sin(phi + 90));
-        
+        let p1y = (p1.velocity.y * cos(t1 - phi) * (m1 - m2) + (2 * m2 * p2.velocity * cos(t2 - phi)) / (m1 + m2)) * sin(phi) + p1.velocity.y * sin(t1 - phi * sin(phi + 90));
+
         p1.velocity.set(p1x, p1y);
-        p1.position.set(p1.prevX[p1.prevX.length-2], p1.prevY[p1.prevX.length-2]);
-        
+        p1.position.set(p1.prevX[p1.prevX.length - 2], p1.prevY[p1.prevX.length - 2]);
+
         // particle 2
         let p2x = (p2.velocity.x * cos(t2 - phi) * (m2 - m1) + (2 * m1 * p2.velocity.x * cos(t1 - phi)) / (m2 + m1)) * cos(phi) + p2.velocity.x * sin(t2 - phi * cos(phi + 90));
         let p2y = (p2.velocity.y * cos(t2 - phi) * (m2 - m1) + (2 * m1 * p2.velocity.y * cos(t1 - phi)) / (m2 + m1)) * sin(phi) + p2.velocity.y * sin(t2 - phi * sin(phi + 90));
-        
-        p2.velocity.set(p2x, p2y);    
-        p2.position.set(p2.prevX[p2.prevX.length-2], p2.prevY[p2.prevX.length-2]);
+
+        p2.velocity.set(p2x, p2y);
+        p2.position.set(p2.prevX[p2.prevX.length - 2], p2.prevY[p2.prevX.length - 2]);
       }
     }
   }
@@ -48,11 +48,12 @@ function doCollisions(arr) {
 
 class particle {
   /* this is the abstract parent class of all particles. It handles movement of both light and heavy particles, including bouncing off the edges of the hitbox, by getting their own radii and using that to make a margin. Show, getRad() and getMass() are relegated to the the individual concretion of the particle because said methods differ. */
-  constructor(x, y, velX, velY) {
-    this.position = createVector(x,y); // we take in an x and y, which is located at the particle injection point, which itself has a range; we then take in an x velocity component and a y velocity component. We then make vectors for each to store this information
+  constructor(x, y, velX, velY, gasConfig) {
+    this.position = createVector(x, y); // we take in an x and y, which is located at the particle injection point, which itself has a range; we then take in an x velocity component and a y velocity component. We then make vectors for each to store this information
     this.velocity = createVector(velX, velY);
     this.prevX = [];
     this.prevY = [];
+    this.config = gasConfig;
   }
 
   move() {
@@ -62,19 +63,19 @@ class particle {
     this.position.add(this.velocity); // the position is a vector by itself. Remember, in p5, a vector is NOT explicitly direction and maginute, but instead an x and y component. Think of it like an array with two items. By adding the velocity to the position every frame, the particle will traverse the canvas by whatever the velocity is, which starts at 7 for a light particle but can be affected when it collides with other particles and/or by the temeperature
 
     //this.velocity.mult((Members.temperatureK * 0.001));
-    
-    if (this.position.x <= gasConfig.boxX + this.getRad() + 2 || this.position.x >= gasConfig.boxWidth - this.getRad() - 2) {
+
+    if (this.position.x <= this.config.boxX + this.getRad() + 2 || this.position.x >= this.config.boxWidth - this.getRad() - 2) {
       this.velocity.mult(-1, 1); // when the ball hits an x axis, we multiply the x value by -1 and the y value by 1. In other words, when it hits the right or left side we invert only the x dimension of the velocity vector
     }
-    if (this.position.y <= gasConfig.boxY + this.getRad() + 2 || this.position.y >= gasConfig.boxHeight - this.getRad() - 2) {
+    if (this.position.y <= this.config.boxY + this.getRad() + 2 || this.position.y >= this.config.boxHeight - this.getRad() - 2) {
       this.velocity.mult(1, -1); // when the ball hits a y axis, we multiply the x value in the velocity vector by 1 and the y value by -1. In other words, when it hits the top or bottom we invert only the y dimension of the velocity vector
     }
-    
-    if (this.position.x >= gasConfig.boxWidth) {
-      this.position.x = gasConfig.boxWidth - this.getRad() - 2;
+
+    if (this.position.x >= this.config.boxWidth) {
+      this.position.x = this.config.boxWidth - this.getRad() - 2;
     }
-    if (this.position.x <= gasConfig.boxX) {
-      this.position.x = gasConfig.boxX + this.getRad();
+    if (this.position.x <= this.config.boxX) {
+      this.position.x = this.config.boxX + this.getRad();
     }
     this.prevX.shift();
     this.prevY.shift();
@@ -82,17 +83,17 @@ class particle {
 }
 
 class lightParticle extends particle { // since we have an abstraction above, we make a concrete version of that class to house the relegated methods of show(), getRad() and getMass()
-  constructor(x, y, velX, velY) {
-    super(x, y, velX, velY); // the super function calls into the parent class and effectively runs the code in its constructor for each instance of the lightParticle object
+  constructor(x, y, velX, velY, gasConfig) {
+    super(x, y, velX, velY, gasConfig); // the super function calls into the parent class and effectively runs the code in its constructor for each instance of the lightParticle object
   }
 
   show() {
     // show is one of the relegated methods mentioned above, as both the size and color of each type is unique
-    fill(gasConfig.l);
-    stroke(gasConfig.l);
+    fill(this.config.l);
+    stroke(this.config.l);
     ellipse(this.position.x, this.position.y, 7);
     angleMode(DEGREES);
-    if (gasConfig.debug) { // if the debug switch is flipped, the velocity and direction of the particle is written on the particle
+    if (this.config.debug) { // if the debug switch is flipped, the velocity and direction of the particle is written on the particle
       fill(globalConfig.veryDark);
       textSize(15);
       text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x, this.position.y);
@@ -111,15 +112,15 @@ class lightParticle extends particle { // since we have an abstraction above, we
 
 class heavyParticle extends particle {
   // concretion for heavy particles
-  constructor(x, y, velX, velY) {
-    super(x, y, velX, velY);
+  constructor(x, y, velX, velY, gasConfig) {
+    super(x, y, velX, velY, gasConfig);
   }
 
   show() {
-    fill(gasConfig.h);
-    stroke(gasConfig.h);
+    fill(this.config.h);
+    stroke(this.config.h);
     ellipse(this.position.x, this.position.y, 10);
-    if (gasConfig.debug) {
+    if (this.config.debug) {
       fill(globalConfig.veryDark);
       textSize(15);
       text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x, this.position.y);

@@ -1,13 +1,14 @@
 class button {
-  constructor (threshold = 20) {
+  constructor (threshold = 20, gasConfig) {
     this.threshold = threshold;
     this.buttonSize = globalConfig.buttonSize;
+    this.config = gasConfig;
   }
 }
 
 class debugToggle extends button {
-  constructor (threshold) {
-    super(threshold);
+  constructor (threshold, gasConfig) {
+    super(threshold, gasConfig);
     this.x = 1530;
     this.y = 850;
   }
@@ -15,21 +16,21 @@ class debugToggle extends button {
   clicked () {
     let distance = dist (mouseX, mouseY, this.x+this.buttonSize/2, this.y+this.buttonSize/2);
       if (distance <= this.threshold) {
-        gasConfig.debug = !gasConfig.debug;
+        this.config.debug = !this.config.debug;
     }
   }
 
   show() {
     noFill();
     noStroke();
-    if (gasConfig.debug) { // toggled on
+    if (this.config.debug) { // toggled on
       globalConfig.buttonOn.setAlpha(150);
       fill (globalConfig.buttonOn);
     }
     else { // toggled off
       fill (globalConfig.buttonOff);
     }
-    rect (this.x, this.y, this.x+gasConfig.buttonSize, this.y+gasConfig.buttonSize, 10);
+    rect (this.x, this.y, this.x+this.config.buttonSize, this.y+this.config.buttonSize, 10);
   }
 }
 
@@ -43,7 +44,7 @@ class debugToggle extends button {
 //       if (distance <= this.threshold) {
 //         for (let i = 0; i < Members.llimit; i++) {
 //         angleMode (DEGREES);
-//         let lP = new lightParticle(Members.linjectionX, Members.linjectionY, random(-3,3), random(-3,3));
+//         let lP = new lightParticle(Members.linjectionX, Members.linjectionY, random(-3,3), random(-3,3), this.config);
 //         particles.push(lP);
 //         Members.lightParticles++;
 //        }
@@ -52,7 +53,7 @@ class debugToggle extends button {
 //   show() {
 //     noStroke();
 //     fill(Particles.ld);
-//     ellipse(Buttons.lightParticleInjectionButtonX - 2, Buttons.lightParticleInjectionButtonY + 3, 45, 45);
+//     ellipse(this.config.lightParticleInjectionButtonX - 2, Buttons.lightParticleInjectionButtonY + 3, 45, 45);
 //     rect(Buttons.lightParticleInjectionButtonX + 10, Buttons.lightParticleInjectionButtonY - 5, Buttons.lightParticleInjectionButtonX + 40, Buttons.lightParticleInjectionButtonY + 5);
 //     fill(Particles.l);
 //     ellipse(Buttons.lightParticleInjectionButtonX, Buttons.lightParticleInjectionButtonY, 45, 45);

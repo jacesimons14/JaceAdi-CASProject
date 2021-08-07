@@ -1,7 +1,5 @@
 /* simulation.js is effectively the 'main.js' file in the sense that it is the starting point for our code. It calls all other functions and thereby assembles the simulation */
-let context;
-let states = [];
-let currentState;
+let context2d;
 let globalConfig;
 
 function preload() {
@@ -17,21 +15,21 @@ function setup() {
   rectMode(CORNERS); // corners mode allows you to make rectangles based on its top left and bottom right corners. This is just preference
   angleMode(DEGREES); // the collision calculations are done much easier when using degrees vs radians
   
-  context = canvas.getContext('2d');
-  states.push("gasSim");
+  context2d = canvas.getContext('2d');
 }
 
 function draw() {
   globalConfig = new globalConfiguration();
-  currentState = new gasSimulation();
-  stateMachine(currentState, states);
+  let currentState = new gasSimulation(context2d);
+  stateMachine(currentState);
 }
 
-function stateMachine (currentState, states) {
-  try {
-    currentState.update();
-  }
-  catch (error) {
-    console.error("State machine returned error: " + error);
-  }
+function stateMachine (currentState) {
+  currentState.update();
+  // try {
+  //   currentState.update();
+  // }
+  // catch (error) {
+  //   console.error("State machine returned error: " + error);
+  // }
 }
