@@ -8,12 +8,10 @@ class globalConfiguration {
     this.veryLight = color("#a1b6c2");
     this.veryDark = color("#3c3c3c");
     this.redAccent = color('#F18D95');
-    this.buttonOn = color('#676767');
+    //this.buttonOn = color('#676767');
+    this.buttonOn = color('#FD7607');
+    this.buttonOn.setAlpha(150);
     this.buttonOff = color('#272727');
-
+    this.buttonOff.setAlpha(150);
   }
-
-  //   update () {
-
-  //   }
 }

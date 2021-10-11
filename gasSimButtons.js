@@ -1,36 +1,37 @@
 class button {
-  constructor(threshold = 20, gasConfig) {
-    this.threshold = threshold;
-    this.buttonSize = globalConfig.buttonSize;
+  constructor(gasConfig, threshold = 20) {
     this.config = gasConfig;
+    this.threshold = threshold;
   }
 }
 
 class debugToggle extends button {
-  constructor(threshold, gasConfig) {
-    super(threshold, gasConfig);
-    this.x = 1530;
-    this.y = 850;
+  constructor(gasConfig, threshold) {
+    super(gasConfig, threshold);
+    this.x = 750//1530;
+    this.y = 500//850;
   }
 
   clicked() {
-    let distance = dist(mouseX, mouseY, this.x + this.buttonSize / 2, this.y + this.buttonSize / 2);
+    let distance = dist(mouseX, mouseY, this.x + globalConfig.buttonSize / 2, this.y + globalConfig.buttonSize / 2);
     if (distance <= this.threshold) {
       this.config.debug = !this.config.debug;
+      this.config.debug.initialize();
+      //console.log("button");
+      //console.log(!this.config.debug);
     }
   }
 
   show() {
-    noFill();
     noStroke();
     if (this.config.debug) { // toggled on
-      globalConfig.buttonOn.setAlpha(150);
       fill(globalConfig.buttonOn);
     }
     else { // toggled off
       fill(globalConfig.buttonOff);
     }
-    rect(this.x, this.y, this.x + this.config.buttonSize, this.y + this.config.buttonSize, 10);
+    rect(this.x, this.y, this.x + globalConfig.buttonSize, this.y + globalConfig.buttonSize, 10);
+    text (this.config.debug, this.x + 50, this.y + 10);
   }
 }
 

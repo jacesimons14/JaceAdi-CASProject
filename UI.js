@@ -1,10 +1,21 @@
+let buttons = [];
+
 class UI {
+  constructor(globalConfig, context2d) {
+    this.globalConfig = globalConfig;
+    this.context = context2d;
+    this.topTitleText;
+    this.bottomTitleText;
+  }
+
   show() {
     // left third card
     noStroke();
     let gradient = this.context.createLinearGradient(0, 0, windowWidth / 4, 0);
-    gradient.addColorStop(0, '#21343F');
-    gradient.addColorStop(1, '#4E6573');
+    gradient.addColorStop(0, '#104869');
+    //  #21343F ^
+    gradient.addColorStop(1, '#365a70');
+    //  #4E6573 ^
     this.context.shadowColor = '#B5CBD8';
     this.context.shadowBlur = 200;
     this.context.shadowOffsetX = 10;
@@ -13,7 +24,7 @@ class UI {
 
     this.context.restore();
 
-    // gas sim text
+    // sim title text
 
     this.context.shadowColor = '#B5CBD8';
     this.context.shadowBlur = 200;
@@ -21,8 +32,8 @@ class UI {
     textSize(250);
     textFont(galataSans);
     fill(189, 210, 222, 190);
-    text("GAS", 320, 300);
-    text("SIM", 320, 500);
+    text(this.topTitleText, 320, 300);
+    text(this.bottomTitleText, 320, 500);
 
     this.context.shadowBlur = 0;
 
@@ -44,7 +55,16 @@ class UI {
 
     textFont(fontBold);
     strokeWeight(2);
+    //redraw();
   }
+}
+
+function mousePressed() {
+  buttons.forEach(element => element.clicked());
+}
+
+function mouseDragged() {
+  //this.buttons.forEach(button => button.show());
 }
 
 // function animateColorTransition(color1, color2) {

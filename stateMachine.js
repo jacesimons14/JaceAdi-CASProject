@@ -19,9 +19,10 @@ function setup() {
 }
 
 function draw() {
-  globalConfig = new globalConfiguration();
-  let currentState = new gasSimulation(context2d);
-  stateMachine(currentState);
+    globalConfig = new globalConfiguration();
+    let currentState = new gasSimulation(context2d, globalConfig);
+    currentState.update();
+    //stateMachine(currentState);
 }
 
 function stateMachine(currentState) {
