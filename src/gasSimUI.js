@@ -8,13 +8,20 @@ class gasSimUI extends UI {
   }
 
   show() {
-    //context.restore();
-    image(gasSimBackgroundImage, 0, 0, windowWidth);
-    image(gasSimSubsectionImage, windowWidth / 4, windowHeight - 200);
-    this.context.save();
-    this.context.textAlign = "left";
+    let tempX = 100;
+    let tempY = 100;
+    point (tempX, tempY);
+    tempx++;
+    tempY++;
 
-    textAlign(CENTER, CENTER);
+    //context.restore();
+
+    // image(gasSimBackgroundImage, 0, 0, windowWidth);
+    // image(gasSimSubsectionImage, windowWidth / 4, windowHeight - 200);
+    // this.context.save();
+    // this.context.textAlign = "left";
+    //
+    // textAlign(CENTER, CENTER);
 
     super.show();
 
