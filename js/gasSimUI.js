@@ -22,9 +22,12 @@ class gasSimUI extends UI {
     // particles.forEach (element => element.show());
 
     // hitbox
-    stroke(globalConfig.veryLight);
-    noFill();
-    rect(this.config.boxX, this.config.boxY, this.config.boxWidth, this.config.boxHeight, 7);
+    //stroke(globalConfig.veryLight);
+    //noFill();
+    fill (255,0,0);
+    stroke (255,0,0);
+    rect (100,100,100,100);
+    //rect(this.config.boxX, this.config.boxY, this.config.boxWidth, this.config.boxHeight, 7);
 
     textSize(20);
     fill(globalConfig.redAccent);

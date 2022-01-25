@@ -2,21 +2,21 @@ class UI {
   show() {
     // left third card
     noStroke();
-    let gradient = this.context.createLinearGradient(0, 0, windowWidth / 4, 0);
-    gradient.addColorStop(0, '#21343F');
-    gradient.addColorStop(1, '#4E6573');
-    this.context.shadowColor = '#B5CBD8';
-    this.context.shadowBlur = 200;
-    this.context.shadowOffsetX = 10;
-    this.context.fillStyle = gradient;
-    this.context.fillRect(0, 0, windowWidth / 4, windowHeight);
+    // let gradient = this.context.createLinearGradient(0, 0, windowWidth / 4, 0);
+    // gradient.addColorStop(0, '#21343F');
+    // gradient.addColorStop(1, '#4E6573');
+    // this.context.shadowColor = '#B5CBD8';
+    // this.context.shadowBlur = 200;
+    // this.context.shadowOffsetX = 10;
+    // this.context.fillStyle = gradient;
+    // this.context.fillRect(0, 0, windowWidth / 4, windowHeight);
 
     //this.context.restore();
 
     // gas sim text
 
-    this.context.shadowColor = '#B5CBD8';
-    this.context.shadowBlur = 200;
+    //this.context.shadowColor = '#B5CBD8';
+    //this.context.shadowBlur = 200;
     textAlign(LEFT);
     textSize(250);
     textFont(galataSans);
@@ -24,11 +24,13 @@ class UI {
     text("GAS", 320, 300);
     text("SIM", 320, 500);
 
-    this.context.shadowBlur = 0;
+    //this.context.shadowBlur = 0;
 
     // dashboard bar
 
-    this.context.save();
+    // this.context.save();
+
+    rect (100,100,100,100);
 
     fill(78, 104, 119, 150);
     rect(windowWidth / 4, windowHeight - 200, windowWidth, windowHeight);
@@ -40,7 +42,7 @@ class UI {
     textFont(fontBold);
     text("Jace Simons & Adi Bhushan 2021", windowWidth - 225, windowHeight - 20);
 
-    this.context.restore();
+    //this.context.restore();
 
     textFont(fontBold);
     strokeWeight(2);

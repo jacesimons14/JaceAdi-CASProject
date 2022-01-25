@@ -1,5 +1,5 @@
 /* simulation.js is effectively the 'main.js' file in the sense that it is the starting point for our code. It calls all other functions and thereby assembles the simulation */
-let context2d;
+//let context2d;
 let globalConfig;
 
 function preload() {
@@ -15,12 +15,14 @@ function setup() {
   rectMode(CORNERS); // corners mode allows you to make rectangles based on its top left and bottom right corners. This is just preference
   angleMode(DEGREES); // the collision calculations are done much easier when using degrees vs radians
 
-  context2d = canvas.getContext('2d');
+  //context2d = canvas.getContext('2d');
 }
 
 function draw() {
+  fill (255,0,0);
+  rect (100,100,100,100);
   globalConfig = new globalConfiguration();
-  let currentState = new gasSimulation(context2d);
+  let currentState = new gasSimulation(/*context2d*/);
   currentState.update();
   //stateMachine(currentState);
   background(0,0,255);

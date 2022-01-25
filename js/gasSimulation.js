@@ -5,10 +5,10 @@ let gasConfig;
 let gasUI;
 
 class gasSimulation {
-  constructor(context2d) {
+  constructor(/*context2d*/) {
     this.gasConfig = new gasSimConfig();
     this.gasConfig.initialize();
-    this.gasUI = new gasSimUI(this.gasConfig, /*context2d*/);
+    this.gasUI = new gasSimUI(this.gasConfig/*, context2d*/);
   }
 
   update() {
