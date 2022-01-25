@@ -39,7 +39,7 @@ class debugToggle extends button {
 //   x : Buttons.lightParticleInjectionButtonX,
 //   y : Buttons.lightParticleInjectionButtonY,
 //   threshold : 20,
-
+//
 //   clicked () {
 //     let distance = dist (mouseX, mouseY, this.x, this.y);
 //       if (distance <= this.threshold) {
@@ -64,12 +64,12 @@ class debugToggle extends button {
 //     text(Members.lightParticles, Buttons.lightParticleInjectionButtonX, Buttons.lightParticleInjectionButtonY - 2.5);
 //   }
 // }
-
+//
 // const heavyParticleInjection = {
 //   x : Buttons.heavyParticleInjectionButtonX,
 //   y : Buttons.heavyParticleInjectionButtonY,
 //   threshold : 22.5,
-
+//
 //   clicked () {
 //     let distance = dist (mouseX, mouseY, this.x, this.y);
 //       if (distance <= this.threshold) {

@@ -22,6 +22,17 @@ class gasSimUI extends UI {
     textAlign(CENTER, CENTER);
 
 
+    // injection buttons
+    let distance = dist (mouseX, mouseY, 35, 395);
+      if (distance <= this.threshold) {
+        for (let i = 0; i < Members.llimit; i++) {
+          angleMode(DEGREES);
+          let lP = new lightParticle(Members.linjectionX, Members.linjectionY, random(-3, 3), random(-3, 3), this.config);
+          particles.push(lP);
+          Members.lightParticles++;
+        }
+      }
+
     particles.forEach (element => element.move());
     particles.forEach (element => element.show());
 
@@ -30,28 +41,28 @@ class gasSimUI extends UI {
     fill(globalConfig.buttonOff);
     rect(this.config.boxX, this.config.boxY, this.config.boxWidth, this.config.boxHeight, 7);
 
-    textSize(20);
-    fill(this.globalConfig.redAccent);
-    noStroke();
-    text("PARTICLES", windowWidth - 1155, windowHeight - 170);
-    text("READOUTS", windowWidth - 700, windowHeight - 170);
-    text("TOGGLES", windowWidth - 265, windowHeight - 170);
+    // textSize(20);
+    // fill(this.globalConfig.redAccent);
+    // noStroke();
+    // text("PARTICLES", windowWidth - 1155, windowHeight - 170);
+    // text("READOUTS", windowWidth - 700, windowHeight - 170);
+    // text("TOGGLES", windowWidth - 265, windowHeight - 170);
 
-    let debugToggleButton = new debugToggle(this.config);
-    buttons.push(debugToggleButton);
-    if (this.config.debug) {
-      fill (this.globalConfig.veryLight);
-      stroke(this.globalConfig.dark);
-      let cursorTextPositionX = mouseX;
-      let cursorTextPositionY = mouseY - 15;
-      if (mouseX < 30) {
-        cursorTextPositionX = 30;
-      }
-      if (mouseY < 45) {
-        cursorTextPositionY = 30
-      }
-      text('' + mouseX + ', ' + mouseY, cursorTextPositionX, cursorTextPositionY);
-    }
-    buttons.forEach(element => element.show());
+    // let debugToggleButton = new debugToggle(this.config);
+    // buttons.push(debugToggleButton);
+    // if (this.config.debug) {
+    //   fill (this.globalConfig.veryLight);
+    //   stroke(this.globalConfig.dark);
+    //   let cursorTextPositionX = mouseX;
+    //   let cursorTextPositionY = mouseY - 15;
+    //   if (mouseX < 30) {
+    //     cursorTextPositionX = 30;
+    //   }
+    //   if (mouseY < 45) {
+    //     cursorTextPositionY = 30
+    //   }
+    //   text('' + mouseX + ', ' + mouseY, cursorTextPositionX, cursorTextPositionY);
+    // }
+    // buttons.forEach(element => element.show());
   }
 }
