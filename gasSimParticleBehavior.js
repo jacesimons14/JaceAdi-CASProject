@@ -5,7 +5,7 @@ function doCollisions(arr) {
     // iterate through the array
     let p1 = pars[i]; // store the object at index i in the iteration above
     //console.log(p1.prevX + ', ' + p1.prevY);
-    for (let n = 0; n < pars.length && n != i; n++) {
+    for (let n = 0; n < pars.length && n !== i; n++) {
       /* we iterate through the array again once we are inside the loop so that every particle is checked against every other particle. In other words, for every object in the outer loop, we loop through the entirety of the rest of the particles and calculate any collisions */
       let p2 = pars[n]; // store object index n
       //let dis = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y); // calculate distance between centers of each particle
