@@ -9,22 +9,30 @@ class gasSimUI extends UI {
     }
 
     show() {
-        //background(0,0,0);
+        background(0,0,0);
         this.context.restore();
 
         //console.log(this.config.debug);
-        // image(gasSimBackgroundImage, 0, 0, windowWidth);
-        // image(gasSimSubsectionImage, windowWidth / 4, windowHeight - 200);
+        image(gasSimBackgroundImage, 0, 0, windowWidth);
+        image(gasSimSubsectionImage, windowWidth / 4, windowHeight - 200);
         this.context.save();
-        //this.context.textAlign = "left";
+        this.context.textAlign = "left";
 
-        //super.show();
+        super.show();
         textAlign(CENTER, CENTER);
 
-        background(0,0,0)
+        //background(0,0,0)
+
+        // hitbox
+        stroke(globalConfig.veryLight);
+        fill(globalConfig.buttonOff);
+        rect(this.config.boxX, this.config.boxY, this.config.boxWidth, this.config.boxHeight, 7);
+
+        textSize(20)
+        text(particles.length, 500,500)
 
         // injection buttons
-        fill('#3a29d6');
+        fill(this.config.l);
         noStroke();
         ellipse(735, 805, 60, 60);
         let distance = dist(mouseX, mouseY, 735, 805);
@@ -35,16 +43,12 @@ class gasSimUI extends UI {
                 this.config.lightParticles++;
         }
 
-        textSize(20)
-        text(particles.length, 500,500)
+
 
         particles.forEach(element => element.move());
         particles.forEach(element => element.show());
 
-        // hitbox
-        stroke(globalConfig.veryLight);
-        fill(globalConfig.buttonOff);
-        rect(this.config.boxX, this.config.boxY, this.config.boxWidth, this.config.boxHeight, 7);
+
 
         // textSize(20);
         // fill(this.globalConfig.redAccent);

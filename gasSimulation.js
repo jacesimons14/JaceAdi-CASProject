@@ -5,15 +5,14 @@ let gasUI;
 
 class gasSimulation {
   constructor(context2d, globalConfig) {
-    this.gasConfig = new gasSimConfig();
-    this.gasConfig.initialize();
-    this.globalConfig = globalConfig;
-    this.gasUI = new gasSimUI(this.globalConfig, context2d, this.gasConfig);
+    gasConfig = new gasSimConfig();
+    gasConfig.initialize();
+    //globalConfig = globalConfig;
+    gasUI = new gasSimUI(globalConfig, context2d, gasConfig);
   }
 
   update() {
     doCollisions(particles);
-    this.gasUI.show();
-    //console.log("reached!");
+    gasUI.show();
   }
 }
