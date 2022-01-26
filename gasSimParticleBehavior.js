@@ -5,7 +5,7 @@ function doCollisions(arr) {
     // iterate through the array
     let p1 = pars[i]; // store the object at index i in the iteration above
     //console.log(p1.prevX + ', ' + p1.prevY);
-    for (let n = 0; n < pars.length && n != i; n++) {
+    for (let n = 0; n < pars.length && n !== i; n++) {
       /* we iterate through the array again once we are inside the loop so that every particle is checked against every other particle. In other words, for every object in the outer loop, we loop through the entirety of the rest of the particles and calculate any collisions */
       let p2 = pars[n]; // store object index n
       //let dis = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y); // calculate distance between centers of each particle
@@ -64,11 +64,13 @@ class particle {
 
     //this.velocity.mult((Members.temperatureK * 0.001));
 
-    if (this.position.x <= this.config.boxX + this.getRad() + 2 || this.position.x >= this.config.boxWidth - this.getRad() - 2) {
+    if (this.position.x <= this.config.boxX + 10 || this.position.x >= this.config.boxWidth - this.getRad() - 2) {
       this.velocity.mult(-1, 1); // when the ball hits an x axis, we multiply the x value by -1 and the y value by 1. In other words, when it hits the right or left side we invert only the x dimension of the velocity vector
+      //this.velocity[0].mult(-1);
     }
     if (this.position.y <= this.config.boxY + this.getRad() + 2 || this.position.y >= this.config.boxHeight - this.getRad() - 2) {
       this.velocity.mult(1, -1); // when the ball hits a y axis, we multiply the x value in the velocity vector by 1 and the y value by -1. In other words, when it hits the top or bottom we invert only the y dimension of the velocity vector
+      //this.velocity[1].mult(-1);
     }
 
     if (this.position.x >= this.config.boxWidth) {
@@ -93,11 +95,11 @@ class lightParticle extends particle { // since we have an abstraction above, we
     stroke(this.config.l);
     ellipse(this.position.x, this.position.y, 7);
     angleMode(DEGREES);
-    if (this.config.debug) { // if the debug switch is flipped, the velocity and direction of the particle is written on the particle
-      fill(globalConfig.veryDark);
-      textSize(15);
-      text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x, this.position.y);
-    }
+    // if (this.config.debug) { // if the debug switch is flipped, the velocity and direction of the particle is written on the particle
+    //   fill(globalConfig.veryDark);
+    //   textSize(15);
+    //   text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x, this.position.y);
+    //}
   }
 
   getRad() {
@@ -120,11 +122,11 @@ class heavyParticle extends particle {
     fill(this.config.h);
     stroke(this.config.h);
     ellipse(this.position.x, this.position.y, 10);
-    if (this.config.debug) {
-      fill(globalConfig.veryDark);
-      textSize(15);
-      text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x, this.position.y);
-    }
+    // if (this.config.debug) {
+    //   fill(globalConfig.veryDark);
+    //   textSize(15);
+    //   text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x, this.position.y);
+    // }
   }
 
   getRad() {

@@ -16,7 +16,7 @@ class gasSimConfig {
     this.boxX = 700;
     this.boxY = 150;
     this.boxHeight = windowHeight - 250;
-
+   
     this.debug = false;
 
     this.l = color("#37E6D8");
