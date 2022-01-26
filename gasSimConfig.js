@@ -8,7 +8,7 @@ class gasSimConfig {
     this.llimit = 10;
     this.hlimit = 10;
 
-    this.temperatureK = 273;
+    this.boxTemperature = 273;
     this.tempUnit = 'K';
 
     this.typeToggle = false;
@@ -25,21 +25,26 @@ class gasSimConfig {
     this.hd = color("#9c1d14");
     this.therLight = color('#e31010');
     this.therDark = color('#590000');
+
+    this.lightInjectionButtonPos = [this.boxX+30, this.boxY + 60];
+    this.heavyInjectionButtonPos = [this.boxWidth/2, this.boxY + 60];
+    this.deleteButtonPos = [this.boxWidth-30, this.boxY + 60];
+    console.log(this.deleteButtonPos[1])
   }
 
   initialize() {
-    if (this.temperatureK >= 1380) {
+    if (this.boxTemperature >= 1380) {
       this.therOffset = 112; // keeps the liquid in the thermometer from exceeding the top of the thermometer
-    } else if (this.temperatureK <= 0) {
+    } else if (this.boxTemperature <= 0) {
       this.therOffset = 225; // puts the therOffset at a set place if temp is 0 kelvins
     }
-    this.therOffset = 250 - this.temperatureK * 0.1; // the therOffset variable is used in the rendering of the thermometer, by altering the height of the liquid by taking into account the current temperature of the volume
-    if (this.temperatureK <= 50) {
+    this.therOffset = 250 - this.boxTemperature * 0.1; // the therOffset variable is used in the rendering of the thermometer, by altering the height of the liquid by taking into account the current temperature of the volume
+    if (this.boxTemperature <= 50) {
       this.therOffset = therBulbCenterY; // if the temperature is less than 50 kelvins, we set the therOffset to the center of the thermometer's bulb because otherwise it would start rendering below and outside of the thermometer
     }
-    this.temperatureF = round(((this.temperatureK - 273.15) * 9) / 5 + 32); // instantiate farenheit and celsius temperatures, as all temperature related information in the simulation is based on the temperature in Kelvin in one way or another. Farenheit and celsius are only used on the thermometer to help understand temperature readout if the user doesn't recognize kelvins
-    this.temperatureC = round(this.temperatureK - 273.15);
-    if (this.temperatureK <= 0) {
+    this.temperatureF = round(((this.boxTemperature - 273.15) * 9) / 5 + 32); // instantiate farenheit and celsius temperatures, as all temperature related information in the simulation is based on the temperature in Kelvin in one way or another. Farenheit and celsius are only used on the thermometer to help understand temperature readout if the user doesn't recognize kelvins
+    this.temperatureC = round(this.boxTemperature - 273.15);
+    if (this.boxTemperature <= 0) {
       this.temperatureF = -459.7;
       this.temperatureC = -273.2;
     }
@@ -56,18 +61,18 @@ class gasSimConfig {
     if (this.boxWidth > windowWidth - 150) {
       this.boxWidth = windowWidth - 150;
     }
-    if (this.debug) {
-      this.linjectionX = 250 + random(-20, 20); // if the debug switch is toggled, all particles spawn in the center of the screen
-      this.linjectionY = 250 + random(-20, 20);
-      this.hinjectionX = 250 + random(-20, 20);
-      this.hinjectionY = 250 + random(-20, 20);
-    }
-    else {
+    // if (this.debug) {
+    //   this.linjectionX = 250 + random(-20, 20); // if the debug switch is toggled, all particles spawn in the center of the screen
+    //   this.linjectionY = 250 + random(-20, 20);
+    //   this.hinjectionX = 250 + random(-20, 20);
+    //   this.hinjectionY = 250 + random(-20, 20);
+    // }
+    // else {
       this.linjectionX = 735 + random(5, 20); // point at which all new particles are spawned
       this.linjectionY = 370 + random(20, 20);
       this.hinjectionX = 735 + random(5, 20);
       this.hinjectionY = 430 + random(20, 20);
-    }
+    //}
   }
 
   /* deprecated */

@@ -10,7 +10,7 @@ function doCollisions(arr) {
       let p2 = pars[n]; // store object index n
       //let dis = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y); // calculate distance between centers of each particle
       let combinedRadii = p1.getRad() + p2.getRad(); // calculate sum of the two radii
-      let distance = p5.Vector.dist(p1.position, p2.position);
+      let distance = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
       if (distance <= combinedRadii) {
         // if the distance between the two is less than the sum of their radii, they are intersecting
         // variables for physics equations

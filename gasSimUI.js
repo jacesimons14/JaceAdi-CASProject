@@ -21,6 +21,7 @@ class gasSimUI extends UI {
         super.show();
         textAlign(CENTER, CENTER);
 
+        angleMode(DEGREES);
         //background(0,0,0)
 
         // hitbox
@@ -31,24 +32,40 @@ class gasSimUI extends UI {
         textSize(20)
         text(particles.length, 500,500)
 
-        // injection buttons
+        // inject light particles
         fill(this.config.l);
         noStroke();
-        ellipse(735, 805, 60, 60);
-        let distance = dist(mouseX, mouseY, 735, 805);
-        if (distance <= 30 && mouseIsPressed) {
-                angleMode(DEGREES);
-                let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY, random(-3, 3), random(-3, 3), this.config);
-                particles.push(lP);
-                this.config.lightParticles++;
+        ellipse(this.config.lightInjectionButtonPos[0], this.config.heavyInjectionButtonPos[1], 60, 60);
+        let lightInjectionDistance = dist(mouseX, mouseY, this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1]);
+        if (lightInjectionDistance <= 30 && mouseIsPressed) {
+            let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY, random(-3, 3), random(-3, 3), this.config);
+            particles.push(lP);
+            this.config.lightParticles++;
         }
 
+        // inject heavy particles
+        fill(this.config.h);
+        ellipse(this.config.heavyInjectionButtonPos[0], this.config.heavyInjectionButtonPos[1], 60, 60);
+        let heavyInjectionDistance = dist(mouseX, mouseY, this.config.heavyInjectionButtonPos[0], this.config.heavyInjectionButtonPos[1]);
+        if (heavyInjectionDistance <= 30 && mouseIsPressed) {
+            let hP = new heavyParticle(this.config.hinjectionX, this.config.linjectionY, random(-1,1), random(-1,1), this.config)
+            particles.push(hP);
+            this.config.heavyParticles++;
+        }
 
+        // clear particles
+        fill(this.globalConfig.redAccent);
+        ellipse(this.config.deleteButtonPos[0], this.config.deleteButtonPos[1], 60, 60);
+        let deleteDistance = dist(mouseX, mouseY, 1235, 805);
+        if (deleteDistance <= 30 && mouseIsPressed && particles.length > 0) {
+            text("deleted particles",1235, 785);
+            for (let i = 0; i < particles.length; i++) {
+                particles.pop();
+            }
+        }
 
         particles.forEach(element => element.move());
         particles.forEach(element => element.show());
-
-
 
         // textSize(20);
         // fill(this.globalConfig.redAccent);
