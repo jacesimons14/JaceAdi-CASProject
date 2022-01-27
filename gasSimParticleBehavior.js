@@ -12,20 +12,25 @@ function doCollisions(arr) {
       let p2 = pars[n]; // store object index n
       let combinedRadii = p1.getRad() + p2.getRad(); // calculate sum of the two radii
       let distance = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
+      //console.log("distance: " + distance);
       // calculate distance between centers of each particle
       if (distance <= combinedRadii) {
+
         // if the distance between the two is less than the sum of their radii, they are intersecting
         // variables for physics equations
         let t1 = p1.velocity.heading();
         let t2 = p2.velocity.heading();
         let m1 = p1.getMass();
         let m2 = p2.getMass();
+        //console.log("m1: " + m1 + " m2: " + m2 + " t1: " + t1 + " t2: " + t2);
+
         let dx = p2.position.x - p1.position.x;
-        let dy = p2.position.y - p1.position.y;
+        //let dx = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
+        // let dy = p2.position.y - p1.position.y;
         let phi;
 
         if (dx === 0) {
-          phi = 90;
+         phi = 90;
         } else {
           phi = p1.velocity.angleBetween(p2.velocity);
         }
@@ -37,7 +42,6 @@ function doCollisions(arr) {
             (m1 + m2)) * sin(phi) + p1.velocity.y * sin(t1 - phi * sin(phi + 90));
 
         p1.velocity.set(p1x, p1y);
-        console.log(p1x + ", " + p1y);
         p1.position.set(p1.prevX[p1.prevX.length - 2], p1.prevY[p1.prevX.length - 2]);
 
         // particle 2
@@ -79,26 +83,30 @@ class particle {
 
     //this.velocity.mult((Members.temperatureK * 0.001));
 
-    if (this.position.x <= this.config.boxX + 10 || this.position.x >= this.config.boxWidth /*- this.getRad() - 2*/) {
-      //this.velocity.mult(-1, 1); // when the ball hits an x axis, we multiply the x value by -1 and the y value by 1.
+    if (this.position.x <= this.config.boxX + 10 || this.position.x >= this.config.boxWidth - this.getRad() - 2) {
+      this.velocity.mult(-1, 1); // when the ball hits an x axis, we multiply the x value by -1 and the y value by 1.
       // In other words, when it hits the right or left side we invert only the x dimension of the velocity vector
-      this.velocity[0] = this.velocity.mult(-1);
+      //this.velocity[0].mult(-1);
     }
-    if (this.position.y <= this.config.boxY /*+ this.getRad() + 2*/ || this.position.y >= this.config.boxHeight /*- this.getRad() - 2*/) {
-      //this.velocity.mult(1, -1); // when the ball hits a y axis, we multiply the x value in the velocity vector by 1
+    if (this.position.y <= this.config.boxY + this.getRad() + 2 || this.position.y >= this.config.boxHeight - this.getRad() - 2) {
+      this.velocity.mult(1, -1); // when the ball hits a y axis, we multiply the x value in the velocity vector by 1
       // and the y value by -1. In other words, when it hits the top or bottom we invert only the y dimension of the
       // velocity vector
-      this.velocity[1] = this.velocity.mult(-1);
+      //this.velocity[1].mult(-1);
     }
 
     if (this.position.x >= this.config.boxWidth) {
-      this.position.x = this.config.boxWidth /*- this.getRad() - 2*/;
+      this.position.x = this.config.boxWidth - this.getRad() - 2;
     }
     if (this.position.x <= this.config.boxX) {
-      this.position.x = this.config.boxX /*+ this.getRad()*/;
+      this.position.x = this.config.boxX + this.getRad();
     }
     this.prevX.shift();
     this.prevY.shift();
+  }
+
+  getRad () {
+    return this.getRad();
   }
 }
 

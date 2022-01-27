@@ -43,7 +43,9 @@ class gasSimUI extends UI {
         let lightInjectionDistance = dist(mouseX, mouseY, this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1]);
         if (lightInjectionDistance <= 30 && mouseIsPressed) {
             let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY, random(-3, 3), random(-3, 3), this.config);
+            let lP1 = new lightParticle(this.config.linjectionX, this.config.linjectionY, random(-3, 3), random(-3, 3), this.config);
             particles.push(lP);
+            particles.push(lP1);
             this.config.lightParticles++;
         }
 
@@ -67,8 +69,6 @@ class gasSimUI extends UI {
                 particles.pop();
             }
         }
-
-
 
         // textSize(20);
         // fill(this.globalConfig.redAccent);
