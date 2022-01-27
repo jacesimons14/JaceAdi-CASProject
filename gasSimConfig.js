@@ -16,6 +16,7 @@ class gasSimConfig {
     this.boxX = 700;
     this.boxY = 150;
     this.boxHeight = windowHeight - 250;
+    this.boxWidth = 1700;
    
     this.debug = false;
 
@@ -26,10 +27,11 @@ class gasSimConfig {
     this.therLight = color('#e31010');
     this.therDark = color('#590000');
 
-    this.lightInjectionButtonPos = [this.boxX+30, this.boxY + 60];
-    this.heavyInjectionButtonPos = [this.boxWidth/2, this.boxY + 60];
-    this.deleteButtonPos = [this.boxWidth-30, this.boxY + 60];
-    console.log(this.deleteButtonPos[1])
+    this.lightInjectionButtonPos = [this.boxX + 30, this.boxHeight + 150];
+    this.heavyInjectionButtonPos = [this.boxX + 120, this.boxHeight + 150];
+    this.deleteButtonPos = [this.boxX + 210, this.boxHeight + 150];
+    //console.log(this.lightInjectionButtonPos[1]);
+    //console.log(this.deleteButtonPos[1]);
   }
 
   initialize() {
@@ -55,9 +57,9 @@ class gasSimConfig {
       this.hlimit = 1; // ^^ for heavy
     }
     this.boxWidth = 1700; // x coordinate of the right edge of the box. Can be resized with the pull handle.
-    if (this.boxWidth < 775) {
-      this.boxWidth = 775;
-    }
+    // if (this.boxWidth < 775) {
+    //   this.boxWidth = 775;
+    // }
     if (this.boxWidth > windowWidth - 150) {
       this.boxWidth = windowWidth - 150;
     }
