@@ -16,7 +16,8 @@ function doCollisions(arr) {
       // calculate distance between centers of each particle
       if (distance <= combinedRadii) {
 
-        // if the distance between the two is less than the sum of their radii, they are intersecting
+
+        //if the distance between the two is less than the sum of their radii, they are intersecting
         // variables for physics equations
         let t1 = p1.velocity.heading();
         let t2 = p2.velocity.heading();
@@ -81,18 +82,14 @@ class particle {
     // starts at 7 for a light particle but can be affected when it collides with other particles and/or by the
     // temeperature
 
-    //this.velocity.mult((Members.temperatureK * 0.001));
-
     if (this.position.x <= this.config.boxX + 10 || this.position.x >= this.config.boxWidth - this.getRad() - 2) {
       this.velocity.mult(-1, 1); // when the ball hits an x axis, we multiply the x value by -1 and the y value by 1.
       // In other words, when it hits the right or left side we invert only the x dimension of the velocity vector
-      //this.velocity[0].mult(-1);
     }
     if (this.position.y <= this.config.boxY + this.getRad() + 2 || this.position.y >= this.config.boxHeight - this.getRad() - 2) {
       this.velocity.mult(1, -1); // when the ball hits a y axis, we multiply the x value in the velocity vector by 1
       // and the y value by -1. In other words, when it hits the top or bottom we invert only the y dimension of the
       // velocity vector
-      //this.velocity[1].mult(-1);
     }
 
     if (this.position.x >= this.config.boxWidth) {
