@@ -31,9 +31,10 @@ class gasSimUI extends UI {
         rect(this.config.boxX, this.config.boxY, this.config.boxWidth, this.config.boxHeight, 7);
 
         textSize(20)
-        text(particles.length, this.config.deleteButtonPos[0] + 90, this.config.deleteButtonPos[1]);
-        text(this.config.boxTemperature, this.config.temperatureDecrementButtonPos[0] + 90,
-            this.config.temperatureDecrementButtonPos[1])
+        fill (this.config.therLight)
+        text(particles.length, this.config.deleteButtonPos[0], this.config.deleteButtonPos[1]-5);
+        text(this.config.boxTemperature, this.config.temperatureIncrementButtonPos[0] + 90,
+            this.config.temperatureIncrementButtonPos[1])
 
         particles.forEach(element => element.move());
         particles.forEach(element => element.show());
@@ -68,33 +69,44 @@ class gasSimUI extends UI {
         }
 
         // clear particles
-        fill(this.globalConfig.buttonOff);
+        fill(globalConfig.buttonOff);
         ellipse(this.config.deleteButtonPos[0], this.config.deleteButtonPos[1], 60, 60);
         let deleteDistance = dist(mouseX, mouseY, this.config.deleteButtonPos[0], this.config.deleteButtonPos[1]);
         if (deleteDistance <= 30 && mouseIsPressed && particles.length > 0) {
-            for (let i = 0; i < particles.length; i++) {
-                particles.pop();
-            }
+            particles = []
+        }
+
+        let prevTemperature = this.config.boxTemperature;
+
+        if (prevTemperature != this.config.boxTemperature) {
+            particles.forEach(element => element.accelerate());
         }
 
         // temperature increment
-        fill(this.globalConfig.buttonOn)
+        fill(globalConfig.thermometerIncrease)
         ellipse(this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1], 60, 60);
+        noStroke()
+        fill (globalConfig.redAccent)
+        textAlign(CENTER)
+        text("+", this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1] - 5);
         let temperatureDistance = dist(mouseX, mouseY, this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1]);
         if (temperatureDistance <= 30 && mouseIsPressed) {
             this.config.boxTemperature++;
         }
 
         // temperature decrement
-        fill(this.globalConfig.redAccent)
+        fill(globalConfig.thermometerDecrease)
         ellipse(this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1], 60, 60);
+        fill (globalConfig.veryLight);
+        textAlign(CENTER)
+        text("-", this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1] - 5);
         let temperatureDecrementDistance = dist(mouseX, mouseY, this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1]);
-        if (temperatureDecrementDistance <= 30 && mouseIsPressed && this.config.boxTemperature >= 0) {
+        if (temperatureDecrementDistance <= 30 && mouseIsPressed && this.config.boxTemperature > 0) {
             this.config.boxTemperature--;
         }
 
         // textSize(20);
-        // fill(this.globalConfig.redAccent);
+        // fill(globalConfig.redAccent);
         // noStroke();
         // text("PARTICLES", windowWidth - 1155, windowHeight - 170);
         // text("READOUTS", windowWidth - 700, windowHeight - 170);
@@ -103,8 +115,8 @@ class gasSimUI extends UI {
         // let debugToggleButton = new debugToggle(this.config);
         // buttons.push(debugToggleButton);
         // if (this.config.debug) {
-        fill(this.globalConfig.veryLight);
-        stroke(this.globalConfig.dark);
+        fill(globalConfig.veryLight);
+        stroke(globalConfig.dark);
         let cursorTextPositionX = mouseX;
         let cursorTextPositionY = mouseY - 15;
         if (mouseX < 30) {

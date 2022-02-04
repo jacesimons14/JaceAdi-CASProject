@@ -13,5 +13,7 @@ class globalConfiguration {
     this.buttonOn.setAlpha(150);
     this.buttonOff = color('#272727');
     this.buttonOff.setAlpha(150);
+    this.thermometerIncrease = color('#eb5e34');
+    this.thermometerDecrease = color ('#00ffff');
   }
 }

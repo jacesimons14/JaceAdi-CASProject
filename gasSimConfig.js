@@ -30,8 +30,8 @@ class gasSimConfig {
     this.lightInjectionButtonPos = [this.boxX + 30, this.boxHeight + 150];
     this.heavyInjectionButtonPos = [this.boxX + 120, this.boxHeight + 150];
     this.deleteButtonPos = [this.boxX + 210, this.boxHeight + 150];
-    this.temperatureIncrementButtonPos = [this.boxX + 500, this.boxHeight + 150];
-    this.temperatureDecrementButtonPos = [this.boxX + 590, this.boxHeight + 150];
+    this.temperatureIncrementButtonPos = [this.boxX + 590, this.boxHeight + 150];
+    this.temperatureDecrementButtonPos = [this.boxX + 500, this.boxHeight + 150];
   }
 
   initialize() {

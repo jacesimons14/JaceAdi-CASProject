@@ -105,6 +105,10 @@ class particle {
     this.prevY.shift();
   }
 
+  accelerate (temp) {
+    this.velocity.add(temp/1000)
+  }
+
   getRad () {
     return this.getRad();
   }
