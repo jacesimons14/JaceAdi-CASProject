@@ -1,11 +1,14 @@
 /* 'ui.js' handles all visual elements of the simulation. The move() and show() calls for particles happen here. Additionally, ui handles mousePressed and mouseDragged events and by extension button presses. Finally, this file contains all button functions, and runs their listener and publisher functions. */
 
+
 class gasSimUI extends UI {
     constructor(globalConfig, context2d, gasConfig) {
         super(globalConfig, context2d);
         this.config = gasConfig;
         super.topTitleText = "GAS";
         super.bottomTitleText = "SIM";
+        this.temperature = this.config.boxTemperature;
+        console.log("reached")
     }
 
     show() {
@@ -31,9 +34,14 @@ class gasSimUI extends UI {
 
         textSize(20)
         text(particles.length, 500,500)
+        text(this.temperature, 100, 200)
 
         particles.forEach(element => element.move());
         particles.forEach(element => element.show());
+
+        function mousePressed () {
+            console.log("lol")
+        }
 
         noStroke();
 
@@ -69,6 +77,16 @@ class gasSimUI extends UI {
                 particles.pop();
             }
         }
+
+        // temperature increment
+        fill (this.globalConfig.buttonOn)
+        ellipse (this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1], 60, 60);
+        let temperatureDistance = dist(mouseX, mouseY, this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1]);
+        if (temperatureDistance <= 30 && mouseIsPressed) {
+            this.temperature++;
+        }
+
+        console.log(this.temperature);
 
         // textSize(20);
         // fill(this.globalConfig.redAccent);

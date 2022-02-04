@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/javascript/extLibs/global-types/node_modules/@types/p5/src/events/mouse.d.ts" libraries="{p5}" />
     <file url="PROJECT" libraries="{@types/p5, analytics}" />
   </component>
 </project>
