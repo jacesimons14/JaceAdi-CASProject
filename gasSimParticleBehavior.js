@@ -76,12 +76,15 @@ class particle {
     this.prevX.push(this.position.x);
     this.prevY.push(this.position.y);
 
+    let temperature = this.config.boxTemperature;
+
     this.position.add(this.velocity); // the position is a vector by itself. Remember, in p5, a vector is NOT explicitly
     // direction and maginute, but instead an x and y component. Think of it like an array with two items. By adding the
     // velocity to the position every frame, the particle will traverse the canvas by whatever the velocity is, which
     // starts at 7 for a light particle but can be affected when it collides with other particles and/or by the
     // temeperature
 
+    // hitboxes
     if (this.position.x <= this.config.boxX + 10 || this.position.x >= this.config.boxWidth - this.getRad() - 2) {
       this.velocity.mult(-1, 1); // when the ball hits an x axis, we multiply the x value by -1 and the y value by 1.
       // In other words, when it hits the right or left side we invert only the x dimension of the velocity vector
