@@ -59,46 +59,10 @@ class UI {
   }
 }
 
-function mousePressed() {
-  buttons.forEach(element => element.clicked());
-}
-
-function mouseDragged() {
-  //this.buttons.forEach(button => button.show());
-}
-
-// function animateColorTransition(color1, color2) {
-//   // UI.transR = color1;
-//   // UI.transG = color1;
-//   // UI.transB = color1;
-
-//   // hex to rgb conversion by Jon Kantner
-//   let r1 = color("0x" + color1.charAt(1) + color1.charAt(2));
-//   let g1 = color("0x" + color1.charAt(3) + color1.charAt(4));
-//   let b1 = color("0x" + color1.charAt(5) + color1.charAt(6));
-
-//   let r2 = color("0x" + color2.charAt(1) + color2.charAt(2));
-//   let g2 = color("0x" + color2.charAt(3) + color2.charAt(4));
-//   let b2 = color("0x" + color2.charAt(5) + color2.charAt(6));
-
-//   colorMode (RGB);
-//   let from = color(0,195,230);
-//   let to = color(235,64,52);
-//   let interA = lerpColor(from, to, 0.33);
-//   stroke(interA);
-
-// //   let r3 = r1;
-// //   let g3 = g1;
-// //   let b3 = b1;
-// //   for (let amt = 0.0 ; amt <= 1.0; amt+=0.1) {
-// //     let c = lerpColor (from, to, 0.5);
-// //     fill (c);
-// //     stroke(c);
-// //     strokeWeight(15);
-// //     point (250,250);
-// //   }
-
-//   // UI.transR = r3;
-//   // UI.transG = g3;
-//   // UI.transB = b3;
+// function mousePressed() {
+//   buttons.forEach(element => element.clicked());
+// }
+//
+// function mouseDragged() {
+//   //this.buttons.forEach(button => button.show());
 // }

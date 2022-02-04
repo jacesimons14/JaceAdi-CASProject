@@ -12,7 +12,7 @@ class gasSimulation {
   }
 
   update() {
-    doCollisions(particles);
     gasUI.show();
+    //doCollisions(particles);
   }
 }
