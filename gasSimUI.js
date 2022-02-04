@@ -31,10 +31,6 @@ class gasSimUI extends UI {
         rect(this.config.boxX, this.config.boxY, this.config.boxWidth, this.config.boxHeight, 7);
 
         textSize(20)
-        fill (this.config.therLight)
-        text(particles.length, this.config.deleteButtonPos[0], this.config.deleteButtonPos[1]-5);
-        text(this.config.boxTemperature, this.config.temperatureIncrementButtonPos[0] + 90,
-            this.config.temperatureIncrementButtonPos[1])
 
         particles.forEach(element => element.move());
         particles.forEach(element => element.show());
@@ -42,8 +38,10 @@ class gasSimUI extends UI {
         noStroke();
 
         // inject light particles
-        fill(this.config.l);
+        fill(globalConfig.buttonOff)
         ellipse(this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1], 60, 60);
+        fill(this.config.l);
+        ellipse(this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1], 10, 10)
         let lightInjectionDistance = dist(mouseX, mouseY, this.config.lightInjectionButtonPos[0],
             this.config.lightInjectionButtonPos[1]);
         if (lightInjectionDistance <= 30 && mouseIsPressed) {
@@ -57,8 +55,10 @@ class gasSimUI extends UI {
         }
 
         // inject heavy particles
-        fill(this.config.h);
+        fill (globalConfig.buttonOff)
         ellipse(this.config.heavyInjectionButtonPos[0], this.config.heavyInjectionButtonPos[1], 60, 60);
+        fill(this.config.h);
+        ellipse(this.config.heavyInjectionButtonPos[0], this.config.heavyInjectionButtonPos[1], 10, 10)
         let heavyInjectionDistance = dist(mouseX, mouseY, this.config.heavyInjectionButtonPos[0],
             this.config.heavyInjectionButtonPos[1]);
         if (heavyInjectionDistance <= 30 && mouseIsPressed) {
@@ -71,39 +71,44 @@ class gasSimUI extends UI {
         // clear particles
         fill(globalConfig.buttonOff);
         ellipse(this.config.deleteButtonPos[0], this.config.deleteButtonPos[1], 60, 60);
+        noStroke()
+        fill(globalConfig.veryLight)
+        text(particles.length, this.config.deleteButtonPos[0], this.config.deleteButtonPos[1]-5);
         let deleteDistance = dist(mouseX, mouseY, this.config.deleteButtonPos[0], this.config.deleteButtonPos[1]);
         if (deleteDistance <= 30 && mouseIsPressed && particles.length > 0) {
             particles = []
         }
 
-        let prevTemperature = this.config.boxTemperature;
-
-        if (prevTemperature != this.config.boxTemperature) {
-            particles.forEach(element => element.accelerate());
-        }
-
         // temperature increment
-        fill(globalConfig.thermometerIncrease)
+        fill(globalConfig.buttonOff)
         ellipse(this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1], 60, 60);
-        noStroke()
-        fill (globalConfig.redAccent)
+        stroke(this.config.therLight)
+        fill (this.config.therLight)
         textAlign(CENTER)
         text("+", this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1] - 5);
+        noStroke()
         let temperatureDistance = dist(mouseX, mouseY, this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1]);
         if (temperatureDistance <= 30 && mouseIsPressed) {
             this.config.boxTemperature++;
         }
 
         // temperature decrement
-        fill(globalConfig.thermometerDecrease)
+        fill(globalConfig.buttonOff)
         ellipse(this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1], 60, 60);
-        fill (globalConfig.veryLight);
+        stroke(this.config.therLight)
+        fill (this.config.therLight);
         textAlign(CENTER)
         text("-", this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1] - 5);
+        noStroke();
         let temperatureDecrementDistance = dist(mouseX, mouseY, this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1]);
         if (temperatureDecrementDistance <= 30 && mouseIsPressed && this.config.boxTemperature > 0) {
             this.config.boxTemperature--;
         }
+
+        fill(globalConfig.veryLight)
+        noStroke();
+        text(this.config.boxTemperature, this.config.temperatureIncrementButtonPos[0] + 90,
+            this.config.temperatureIncrementButtonPos[1])
 
         // textSize(20);
         // fill(globalConfig.redAccent);

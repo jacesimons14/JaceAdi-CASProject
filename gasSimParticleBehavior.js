@@ -66,17 +66,15 @@ class particle {
     this.position = createVector(x, y); // we take in an x and y, which is located at the particle injection point,
     // which itself has a range; we then take in an x velocity component and a y velocity component. We then make
     // vectors for each to store this information
-    this.velocity = createVector(velX, velY);
+    this.config = gasConfig;
+    this.velocity = createVector(velX*this.config.boxTemperature/100, velY*this.config.boxTemperature/100);
     this.prevX = [];
     this.prevY = [];
-    this.config = gasConfig;
   }
 
   move() {
     this.prevX.push(this.position.x);
     this.prevY.push(this.position.y);
-
-    let temperature = this.config.boxTemperature;
 
     this.position.add(this.velocity); // the position is a vector by itself. Remember, in p5, a vector is NOT explicitly
     // direction and maginute, but instead an x and y component. Think of it like an array with two items. By adding the
@@ -103,10 +101,6 @@ class particle {
     }
     this.prevX.shift();
     this.prevY.shift();
-  }
-
-  accelerate (temp) {
-    this.velocity.add(temp/1000)
   }
 
   getRad () {
