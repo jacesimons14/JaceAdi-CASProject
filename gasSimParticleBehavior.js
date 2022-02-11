@@ -67,7 +67,7 @@ class particle {
     // which itself has a range; we then take in an x velocity component and a y velocity component. We then make
     // vectors for each to store this information
     this.config = gasConfig;
-    this.velocity = createVector(velX*this.config.boxTemperature/100, velY*this.config.boxTemperature/100);
+    this.velocity = createVector(velX * this.config.boxTemperature/100, velY * this.config.boxTemperature/100);
     this.prevX = [];
     this.prevY = [];
   }
@@ -103,8 +103,15 @@ class particle {
     this.prevY.shift();
   }
 
-  getRad () {
-    return this.getRad();
+  getRad () {}
+
+  // called to change the velocity by a fraction of the temperature (currently 1/1000th)
+  accelerate (deltaTemp) {
+    this.velocity.mult(deltaTemp * 1.001);
+  }
+
+  decelerate (deltaTemp) {
+    this.velocity.div(Math.abs(deltaTemp))
   }
 }
 
@@ -121,13 +128,6 @@ class lightParticle extends particle { // since we have an abstraction above, we
     stroke(this.config.l);
     ellipse(this.position.x, this.position.y, 7);
     angleMode(DEGREES);
-    // if (this.config.debug) { // if the debug switch is flipped, the velocity and direction of the particle is written
-    // on the particle
-    //   fill(globalConfig.veryDark);
-    //   textSize(15);
-    //   text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x,
-    //   this.position.y);
-    //}
   }
 
   getRad() {
@@ -153,11 +153,6 @@ class heavyParticle extends particle {
     fill(this.config.h);
     stroke(this.config.h);
     ellipse(this.position.x, this.position.y, 10);
-    // if (this.config.debug) {
-    //   fill(globalConfig.veryDark);
-    //   textSize(15);
-    //   text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x, this.position.y);
-    // }
   }
 
   getRad() {
