@@ -14,6 +14,8 @@ class gasSimUI extends UI {
     show() {
         this.temperatureHistory.push(this.config.boxTemperature)
 
+        // doCollisions(particles)
+
         background(0, 0, 0);
         this.context.restore();
 
@@ -67,9 +69,9 @@ class gasSimUI extends UI {
         let lightInjectionDistance = dist(mouseX, mouseY, this.config.lightInjectionButtonPos[0],
             this.config.lightInjectionButtonPos[1]);
         if (lightInjectionDistance <= 30 && mouseIsPressed) {
-            let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY, random(-3, 3), random(-3, 3),
+            let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY,
                 this.config);
-            let lP1 = new lightParticle(this.config.linjectionX, this.config.linjectionY, random(-3, 3), random(-3, 3),
+            let lP1 = new lightParticle(this.config.linjectionX, this.config.linjectionY,
                 this.config);
             particles.push(lP);
             particles.push(lP1);
@@ -84,7 +86,7 @@ class gasSimUI extends UI {
         let heavyInjectionDistance = dist(mouseX, mouseY, this.config.heavyInjectionButtonPos[0],
             this.config.heavyInjectionButtonPos[1]);
         if (heavyInjectionDistance <= 30 && mouseIsPressed) {
-            let hP = new heavyParticle(this.config.hinjectionX, this.config.linjectionY, random(-1, 1), random(-1, 1),
+            let hP = new heavyParticle(this.config.hinjectionX, this.config.linjectionY,
                 this.config)
             particles.push(hP);
             this.config.heavyParticles++;
