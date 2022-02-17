@@ -67,7 +67,7 @@ class particle {
     // which itself has a range; we then take in an x velocity component and a y velocity component. We then make
     // vectors for each to store this information
     this.config = gasConfig;
-    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature*0.005) * this.getRelativeSpeedScalar())
+    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature * 0.005) * this.getRelativeSpeedScalar())
     this.prevX = [];
     this.prevY = [];
   }
@@ -81,6 +81,13 @@ class particle {
     // velocity to the position every frame, the particle will traverse the canvas by whatever the velocity is, which
     // starts at 7 for a light particle but can be affected when it collides with other particles and/or by the
     // temeperature
+
+    // a new velocity vector is made every frame
+    // explain this more later
+    let tempHeading = this.velocity.heading()
+    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature * 0.005) *
+        this.getRelativeSpeedScalar())
+    this.velocity.setHeading(tempHeading)
 
     // hitboxes
     if (this.position.x <= this.config.boxX + 10 || this.position.x >= this.config.boxWidth - this.getRad() - 2) {
@@ -101,15 +108,6 @@ class particle {
     }
     this.prevX.shift();
     this.prevY.shift();
-  }
-
-  // called to change the velocity by a fraction of the temperature (currently 1/1000th)
-  accelerate (deltaTemp) {
-    this.velocity.add(deltaTemp, deltaTemp);
-  }
-
-  decelerate (deltaTemp) {
-    this.velocity.sub(deltaTemp, deltaTemp)
   }
 
   // abstract methods

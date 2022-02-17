@@ -47,19 +47,20 @@ class gasSimUI extends UI {
         let previousTemperature = this.temperatureHistory[this.temperatureHistory.length-2];
 
         // if the temperature is updated, update the speed of the particles
-        if (currentTemperature !== previousTemperature) {
-            let deltaT = currentTemperature - previousTemperature
-            if (currentTemperature > previousTemperature) {
-                // delta T is the change in temperature. If the current temperature is higher than the previous temperature,
-                // it will be a > 0 number, meaning that when we accelerate the particles, it will increase their velocity.
-                particles.forEach(element => element.accelerate(deltaT))
-            }
-            else {
-                // If the temperature is lower than before, subtracting the previous from the current gives us a < 0 number,
-                // meaning that multiplying the velocity vector will make them slower.
-                particles.forEach(element => element.decelerate(deltaT))
-            }
-        }
+
+        // if (currentTemperature !== previousTemperature) {
+        //     let deltaT = currentTemperature - previousTemperature
+        //     if (currentTemperature > previousTemperature) {
+        //         // delta T is the change in temperature. If the current temperature is higher than the previous temperature,
+        //         // it will be a > 0 number, meaning that when we accelerate the particles, it will increase their velocity.
+        //         particles.forEach(element => element.accelerate(deltaT))
+        //     }
+        //     else {
+        //         // If the temperature is lower than before, subtracting the previous from the current gives us a < 0 number,
+        //         // meaning that multiplying the velocity vector will make them slower.
+        //         particles.forEach(element => element.decelerate(deltaT))
+        //     }
+        //}
 
         // inject light particles
         fill(globalConfig.buttonOff)
