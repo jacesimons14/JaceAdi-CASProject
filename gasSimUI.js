@@ -8,13 +8,10 @@ class gasSimUI extends UI {
         this.config = gasConfig;
         super.topTitleText = "GAS";
         super.bottomTitleText = "SIM";
-        this.temperatureHistory = []
     }
 
     show() {
-        this.temperatureHistory.push(this.config.boxTemperature)
-
-        // doCollisions(particles)
+        doCollisions(particles)
 
         background(0, 0, 0);
         this.context.restore();
@@ -43,25 +40,6 @@ class gasSimUI extends UI {
 
         noStroke();
 
-        let currentTemperature = this.temperatureHistory[this.temperatureHistory.length-1];
-        let previousTemperature = this.temperatureHistory[this.temperatureHistory.length-2];
-
-        // if the temperature is updated, update the speed of the particles
-
-        // if (currentTemperature !== previousTemperature) {
-        //     let deltaT = currentTemperature - previousTemperature
-        //     if (currentTemperature > previousTemperature) {
-        //         // delta T is the change in temperature. If the current temperature is higher than the previous temperature,
-        //         // it will be a > 0 number, meaning that when we accelerate the particles, it will increase their velocity.
-        //         particles.forEach(element => element.accelerate(deltaT))
-        //     }
-        //     else {
-        //         // If the temperature is lower than before, subtracting the previous from the current gives us a < 0 number,
-        //         // meaning that multiplying the velocity vector will make them slower.
-        //         particles.forEach(element => element.decelerate(deltaT))
-        //     }
-        //}
-
         // inject light particles
         fill(globalConfig.buttonOff)
         ellipse(this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1], 60, 60);
@@ -70,14 +48,11 @@ class gasSimUI extends UI {
         let lightInjectionDistance = dist(mouseX, mouseY, this.config.lightInjectionButtonPos[0],
             this.config.lightInjectionButtonPos[1]);
         if (lightInjectionDistance <= 30 && mouseIsPressed) {
-            let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY,
-                this.config);
-            let lP1 = new lightParticle(this.config.linjectionX, this.config.linjectionY,
-                this.config);
-            particles.push(lP);
-            particles.push(lP1);
-            this.config.lightParticles++;
-        }
+                let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY,
+                    this.config);
+                particles.push(lP);
+                this.config.lightParticles++;
+            }
 
         // inject heavy particles
         fill (globalConfig.buttonOff)
@@ -149,18 +124,18 @@ class gasSimUI extends UI {
         text("TEMPERATURE", (this.config.temperatureDecrementButtonPos[0]+this.config.
             temperatureReadoutPos[0])/2, (this.config.boxHeight + this.config.temperatureDecrementButtonPos[1])/2);
 
-        if (this.config.debug) {
-            fill(globalConfig.veryLight);
-            stroke(globalConfig.dark);
-            let cursorTextPositionX = mouseX;
-            let cursorTextPositionY = mouseY - 15;
-            if (mouseX < 30) {
-                cursorTextPositionX = 30;
-            }
-            if (mouseY < 45) {
-                cursorTextPositionY = 30
-            }
-            text('' + mouseX + ', ' + mouseY, cursorTextPositionX, cursorTextPositionY);
-        }
+        // if (this.config.debug) {
+        //     fill(globalConfig.veryLight);
+        //     stroke(globalConfig.dark);
+        //     let cursorTextPositionX = mouseX;
+        //     let cursorTextPositionY = mouseY - 15;
+        //     if (mouseX < 30) {
+        //         cursorTextPositionX = 30;
+        //     }
+        //     if (mouseY < 45) {
+        //         cursorTextPositionY = 30
+        //     }
+        //     text('' + mouseX + ', ' + mouseY, cursorTextPositionX, cursorTextPositionY);
+        // }
     }
 }

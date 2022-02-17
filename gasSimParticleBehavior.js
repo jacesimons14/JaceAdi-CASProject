@@ -1,22 +1,19 @@
 function doCollisions(arr) {
   angleMode(DEGREES);
-  let pars = arr; // passed in array of all existing particles
-  for (let i = 0; i < pars.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     // iterate through the array
-    let p1 = pars[i]; // store the object at index i in the iteration above
+    let p1 = arr[i]; // store the object at index i in the iteration above
     //console.log(p1.prevX + ', ' + p1.prevY);
-    for (let n = 0; n < pars.length && n !== i; n++) {
+    for (let n = 0; n < arr.length && n !== i; n++) {
       /* we iterate through the array again once we are inside the loop so that every particle is checked against every
       other particle. In other words, for every object in the outer loop, we loop through the entirety of the rest of
       the particles and calculate any collisions */
-      let p2 = pars[n]; // store object index n
+      let p2 = arr[n]; // store object index n
       let combinedRadii = p1.getRad() + p2.getRad(); // calculate sum of the two radii
       let distance = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
       //console.log("distance: " + distance);
       // calculate distance between centers of each particle
       if (distance <= combinedRadii) {
-
-
         //if the distance between the two is less than the sum of their radii, they are intersecting
         // variables for physics equations
         let t1 = p1.velocity.heading();
