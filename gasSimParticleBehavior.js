@@ -62,27 +62,32 @@ class particle {
   /* this is the abstract parent class of all particles. It handles movement of both light and heavy particles,
   including bouncing off the edges of the hitbox, by getting their own radii and using that to make a margin. Show,
   getRad() and getMass() are relegated to the the individual concretion of the particle because said methods differ. */
-  constructor(x, y, velX, velY, gasConfig) {
+  constructor(x, y, gasConfig) {
     this.position = createVector(x, y); // we take in an x and y, which is located at the particle injection point,
     // which itself has a range; we then take in an x velocity component and a y velocity component. We then make
     // vectors for each to store this information
-    this.velocity = createVector(velX, velY);
+    this.config = gasConfig;
+    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature * 0.005) * this.getRelativeSpeedScalar())
     this.prevX = [];
     this.prevY = [];
-    this.config = gasConfig;
   }
 
   move() {
     this.prevX.push(this.position.x);
     this.prevY.push(this.position.y);
 
-    let temperature = this.config.boxTemperature;
-
     this.position.add(this.velocity); // the position is a vector by itself. Remember, in p5, a vector is NOT explicitly
     // direction and maginute, but instead an x and y component. Think of it like an array with two items. By adding the
     // velocity to the position every frame, the particle will traverse the canvas by whatever the velocity is, which
     // starts at 7 for a light particle but can be affected when it collides with other particles and/or by the
     // temeperature
+
+    // a new velocity vector is made every frame
+    // explain this more later
+    let tempHeading = this.velocity.heading()
+    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature * 0.005) *
+        this.getRelativeSpeedScalar())
+    this.velocity.setHeading(tempHeading)
 
     // hitboxes
     if (this.position.x <= this.config.boxX + 10 || this.position.x >= this.config.boxWidth - this.getRad() - 2) {
@@ -105,19 +110,18 @@ class particle {
     this.prevY.shift();
   }
 
-  accelerate (temp) {
-    this.velocity.add(temp/1000)
-  }
+  // abstract methods
+  getRad () {}
 
-  getRad () {
-    return this.getRad();
-  }
+  getMass () {}
+
+  getRelativeSpeedScalar () {}
 }
 
 class lightParticle extends particle { // since we have an abstraction above, we make a concrete version of that class
   // to house the relegated methods of show(), getRad() and getMass()
-  constructor(x, y, velX, velY, gasConfig) {
-    super(x, y, velX, velY, gasConfig); // the super function calls into the parent class and effectively runs the code
+  constructor(x, y, gasConfig) {
+    super(x, y, gasConfig); // the super function calls into the parent class and effectively runs the code
     // in its constructor for each instance of the lightParticle object
   }
 
@@ -125,15 +129,8 @@ class lightParticle extends particle { // since we have an abstraction above, we
     // show is one of the relegated methods mentioned above, as both the size and color of each type is unique
     fill(this.config.l);
     stroke(this.config.l);
-    ellipse(this.position.x, this.position.y, 7);
+    ellipse(this.position.x, this.position.y, this.getRad()*2);
     angleMode(DEGREES);
-    // if (this.config.debug) { // if the debug switch is flipped, the velocity and direction of the particle is written
-    // on the particle
-    //   fill(globalConfig.veryDark);
-    //   textSize(15);
-    //   text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x,
-    //   this.position.y);
-    //}
   }
 
   getRad() {
@@ -147,6 +144,12 @@ class lightParticle extends particle { // since we have an abstraction above, we
     // code.
     return 7;
   }
+
+  // returns arbitrary value to multiply the velocity vector by, in order to make light particles move faster and heavy
+  // particles move slower
+  getRelativeSpeedScalar() {
+    return 1.8;
+  }
 }
 
 class heavyParticle extends particle {
@@ -158,12 +161,7 @@ class heavyParticle extends particle {
   show() {
     fill(this.config.h);
     stroke(this.config.h);
-    ellipse(this.position.x, this.position.y, 10);
-    // if (this.config.debug) {
-    //   fill(globalConfig.veryDark);
-    //   textSize(15);
-    //   text("" + round(this.velocity.mag(), 2) + "," + round(this.velocity.heading()) + char(186), this.position.x, this.position.y);
-    // }
+    ellipse(this.position.x, this.position.y, this.getRad()*2);
   }
 
   getRad() {
@@ -172,5 +170,9 @@ class heavyParticle extends particle {
 
   getMass() {
     return 10;
+  }
+
+  getRelativeSpeedScalar() {
+    return 1.1;
   }
 }

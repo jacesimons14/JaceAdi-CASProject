@@ -1,5 +1,6 @@
-/* 'ui.js' handles all visual elements of the simulation. The move() and show() calls for particles happen here. Additionally, ui handles mousePressed and mouseDragged events and by extension button presses. Finally, this file contains all button functions, and runs their listener and publisher functions. */
-
+/* 'ui.js' handles all visual elements of the simulation. The move() and show() calls for particles happen here.
+Additionally, ui handles mousePressed and mouseDragged events and by extension button presses. Finally, this file
+contains all button functions, and runs their listener and publisher functions. */
 
 class gasSimUI extends UI {
     constructor(globalConfig, context2d, gasConfig) {
@@ -7,9 +8,14 @@ class gasSimUI extends UI {
         this.config = gasConfig;
         super.topTitleText = "GAS";
         super.bottomTitleText = "SIM";
+        this.temperatureHistory = []
     }
 
     show() {
+        this.temperatureHistory.push(this.config.boxTemperature)
+
+        // doCollisions(particles)
+
         background(0, 0, 0);
         this.context.restore();
 
@@ -31,25 +37,42 @@ class gasSimUI extends UI {
         rect(this.config.boxX, this.config.boxY, this.config.boxWidth, this.config.boxHeight, 7);
 
         textSize(20)
-        fill (this.config.therLight)
-        text(particles.length, this.config.deleteButtonPos[0], this.config.deleteButtonPos[1]-5);
-        text(this.config.boxTemperature, this.config.temperatureIncrementButtonPos[0] + 90,
-            this.config.temperatureIncrementButtonPos[1])
 
         particles.forEach(element => element.move());
         particles.forEach(element => element.show());
 
         noStroke();
 
+        let currentTemperature = this.temperatureHistory[this.temperatureHistory.length-1];
+        let previousTemperature = this.temperatureHistory[this.temperatureHistory.length-2];
+
+        // if the temperature is updated, update the speed of the particles
+
+        // if (currentTemperature !== previousTemperature) {
+        //     let deltaT = currentTemperature - previousTemperature
+        //     if (currentTemperature > previousTemperature) {
+        //         // delta T is the change in temperature. If the current temperature is higher than the previous temperature,
+        //         // it will be a > 0 number, meaning that when we accelerate the particles, it will increase their velocity.
+        //         particles.forEach(element => element.accelerate(deltaT))
+        //     }
+        //     else {
+        //         // If the temperature is lower than before, subtracting the previous from the current gives us a < 0 number,
+        //         // meaning that multiplying the velocity vector will make them slower.
+        //         particles.forEach(element => element.decelerate(deltaT))
+        //     }
+        //}
+
         // inject light particles
-        fill(this.config.l);
+        fill(globalConfig.buttonOff)
         ellipse(this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1], 60, 60);
+        fill(this.config.l);
+        ellipse(this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1], 7, 7)
         let lightInjectionDistance = dist(mouseX, mouseY, this.config.lightInjectionButtonPos[0],
             this.config.lightInjectionButtonPos[1]);
         if (lightInjectionDistance <= 30 && mouseIsPressed) {
-            let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY, random(-3, 3), random(-3, 3),
+            let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY,
                 this.config);
-            let lP1 = new lightParticle(this.config.linjectionX, this.config.linjectionY, random(-3, 3), random(-3, 3),
+            let lP1 = new lightParticle(this.config.linjectionX, this.config.linjectionY,
                 this.config);
             particles.push(lP);
             particles.push(lP1);
@@ -57,12 +80,14 @@ class gasSimUI extends UI {
         }
 
         // inject heavy particles
-        fill(this.config.h);
+        fill (globalConfig.buttonOff)
         ellipse(this.config.heavyInjectionButtonPos[0], this.config.heavyInjectionButtonPos[1], 60, 60);
+        fill(this.config.h);
+        ellipse(this.config.heavyInjectionButtonPos[0], this.config.heavyInjectionButtonPos[1], 10, 10)
         let heavyInjectionDistance = dist(mouseX, mouseY, this.config.heavyInjectionButtonPos[0],
             this.config.heavyInjectionButtonPos[1]);
         if (heavyInjectionDistance <= 30 && mouseIsPressed) {
-            let hP = new heavyParticle(this.config.hinjectionX, this.config.linjectionY, random(-1, 1), random(-1, 1),
+            let hP = new heavyParticle(this.config.hinjectionX, this.config.linjectionY,
                 this.config)
             particles.push(hP);
             this.config.heavyParticles++;
@@ -71,62 +96,71 @@ class gasSimUI extends UI {
         // clear particles
         fill(globalConfig.buttonOff);
         ellipse(this.config.deleteButtonPos[0], this.config.deleteButtonPos[1], 60, 60);
+        noStroke()
+        fill(globalConfig.veryLight)
+        text(particles.length, this.config.deleteButtonPos[0], this.config.deleteButtonPos[1]-5);
         let deleteDistance = dist(mouseX, mouseY, this.config.deleteButtonPos[0], this.config.deleteButtonPos[1]);
         if (deleteDistance <= 30 && mouseIsPressed && particles.length > 0) {
             particles = []
         }
 
-        let prevTemperature = this.config.boxTemperature;
-
-        if (prevTemperature != this.config.boxTemperature) {
-            particles.forEach(element => element.accelerate());
-        }
-
         // temperature increment
-        fill(globalConfig.thermometerIncrease)
-        ellipse(this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1], 60, 60);
-        noStroke()
-        fill (globalConfig.redAccent)
+        fill(globalConfig.buttonOff)
+        ellipse(this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1], 60,
+            60);
+        stroke(this.config.therLight)
+        fill (this.config.therLight)
         textAlign(CENTER)
-        text("+", this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1] - 5);
-        let temperatureDistance = dist(mouseX, mouseY, this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1]);
+        text("+", this.config.temperatureIncrementButtonPos[0], this.config.temperatureIncrementButtonPos[1] -
+            5);
+        noStroke()
+        let temperatureDistance = dist(mouseX, mouseY, this.config.temperatureIncrementButtonPos[0], this.config.
+            temperatureIncrementButtonPos[1]);
         if (temperatureDistance <= 30 && mouseIsPressed) {
             this.config.boxTemperature++;
         }
 
         // temperature decrement
-        fill(globalConfig.thermometerDecrease)
-        ellipse(this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1], 60, 60);
-        fill (globalConfig.veryLight);
+        fill(globalConfig.buttonOff)
+        ellipse(this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1],
+            60, 60);
+        stroke(this.config.therLight)
+        fill (this.config.therLight);
         textAlign(CENTER)
-        text("-", this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1] - 5);
-        let temperatureDecrementDistance = dist(mouseX, mouseY, this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1]);
+        text("-", this.config.temperatureDecrementButtonPos[0], this.config.temperatureDecrementButtonPos[1] -
+            5);
+        noStroke();
+        let temperatureDecrementDistance = dist(mouseX, mouseY, this.config.temperatureDecrementButtonPos[0],
+            this.config.temperatureDecrementButtonPos[1]);
         if (temperatureDecrementDistance <= 30 && mouseIsPressed && this.config.boxTemperature > 0) {
             this.config.boxTemperature--;
         }
 
-        // textSize(20);
-        // fill(globalConfig.redAccent);
-        // noStroke();
-        // text("PARTICLES", windowWidth - 1155, windowHeight - 170);
-        // text("READOUTS", windowWidth - 700, windowHeight - 170);
-        // text("TOGGLES", windowWidth - 265, windowHeight - 170);
+        fill(globalConfig.veryLight)
+        noStroke();
+        text(this.config.boxTemperature + " K", this.config.temperatureReadoutPos[0],
+            this.config.temperatureReadoutPos[1])
 
-        // let debugToggleButton = new debugToggle(this.config);
-        // buttons.push(debugToggleButton);
-        // if (this.config.debug) {
+        textSize(25);
         fill(globalConfig.veryLight);
-        stroke(globalConfig.dark);
-        let cursorTextPositionX = mouseX;
-        let cursorTextPositionY = mouseY - 15;
-        if (mouseX < 30) {
-            cursorTextPositionX = 30;
+        noStroke();
+        text("PARTICLES", (this.config.deleteButtonPos[0]+this.config.lightInjectionButtonPos[0])/2,
+            (this.config.boxHeight + this.config.lightInjectionButtonPos[1])/2);
+        text("TEMPERATURE", (this.config.temperatureDecrementButtonPos[0]+this.config.
+            temperatureReadoutPos[0])/2, (this.config.boxHeight + this.config.temperatureDecrementButtonPos[1])/2);
+
+        if (this.config.debug) {
+            fill(globalConfig.veryLight);
+            stroke(globalConfig.dark);
+            let cursorTextPositionX = mouseX;
+            let cursorTextPositionY = mouseY - 15;
+            if (mouseX < 30) {
+                cursorTextPositionX = 30;
+            }
+            if (mouseY < 45) {
+                cursorTextPositionY = 30
+            }
+            text('' + mouseX + ', ' + mouseY, cursorTextPositionX, cursorTextPositionY);
         }
-        if (mouseY < 45) {
-            cursorTextPositionY = 30
-        }
-        text('' + mouseX + ', ' + mouseY, cursorTextPositionX, cursorTextPositionY);
-        // }
-        // buttons.forEach(element => element.show());
     }
 }

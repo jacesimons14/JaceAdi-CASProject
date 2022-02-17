@@ -9,9 +9,6 @@ class gasSimConfig {
     this.hlimit = 10;
 
     this.boxTemperature = 273;
-    this.tempUnit = 'K';
-
-    this.typeToggle = false;
 
     this.boxX = 700;
     this.boxY = 150;
@@ -27,29 +24,15 @@ class gasSimConfig {
     this.therLight = color('#e31010');
     this.therDark = color('#590000');
 
-    this.lightInjectionButtonPos = [this.boxX + 30, this.boxHeight + 150];
-    this.heavyInjectionButtonPos = [this.boxX + 120, this.boxHeight + 150];
-    this.deleteButtonPos = [this.boxX + 210, this.boxHeight + 150];
-    this.temperatureIncrementButtonPos = [this.boxX + 590, this.boxHeight + 150];
-    this.temperatureDecrementButtonPos = [this.boxX + 500, this.boxHeight + 150];
-  }
+    let buttonHeight = this.boxHeight + 150
 
-  initialize() {
-    if (this.boxTemperature >= 1380) {
-      this.therOffset = 112; // keeps the liquid in the thermometer from exceeding the top of the thermometer
-    } else if (this.boxTemperature <= 0) {
-      this.therOffset = 225; // puts the therOffset at a set place if temp is 0 kelvins
-    }
-    this.therOffset = 250 - this.boxTemperature * 0.1; // the therOffset variable is used in the rendering of the thermometer, by altering the height of the liquid by taking into account the current temperature of the volume
-    if (this.boxTemperature <= 50) {
-      this.therOffset = therBulbCenterY; // if the temperature is less than 50 kelvins, we set the therOffset to the center of the thermometer's bulb because otherwise it would start rendering below and outside of the thermometer
-    }
-    this.temperatureF = round(((this.boxTemperature - 273.15) * 9) / 5 + 32); // instantiate farenheit and celsius temperatures, as all temperature related information in the simulation is based on the temperature in Kelvin in one way or another. Farenheit and celsius are only used on the thermometer to help understand temperature readout if the user doesn't recognize kelvins
-    this.temperatureC = round(this.boxTemperature - 273.15);
-    if (this.boxTemperature <= 0) {
-      this.temperatureF = -459.7;
-      this.temperatureC = -273.2;
-    }
+    this.lightInjectionButtonPos = [this.boxX + 30, buttonHeight];
+    this.heavyInjectionButtonPos = [this.boxX + 120, buttonHeight];
+    this.deleteButtonPos = [this.boxX + 210, buttonHeight];
+    this.temperatureIncrementButtonPos = [this.boxX + 590, buttonHeight];
+    this.temperatureDecrementButtonPos = [this.boxX + 500, buttonHeight];
+    this.temperatureReadoutPos = [this.boxX + 680, buttonHeight]
+
     if (this.llimit <= 0) {
       this.llimit = 1; // keeps the limit of light particles per injection at 1
     }
@@ -70,11 +53,16 @@ class gasSimConfig {
     //   this.hinjectionY = 250 + random(-20, 20);
     // }
     // else {
-      this.linjectionX = 735 + random(5, 20); // point at which all new particles are spawned
-      this.linjectionY = 370 + random(20, 20);
-      this.hinjectionX = 735 + random(5, 20);
-      this.hinjectionY = 430 + random(20, 20);
+    this.linjectionX = 735 + random(5, 20); // point at which all new particles are spawned
+    this.linjectionY = 370 + random(20, 20);
+    this.hinjectionX = 735 + random(5, 20);
+    this.hinjectionY = 430 + random(20, 20);
     //}
+
+  }
+
+  initialize() {
+
   }
 
   /* deprecated */
