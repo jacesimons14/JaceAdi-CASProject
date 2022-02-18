@@ -11,9 +11,7 @@ class gasSimUI extends UI {
     }
 
     show() {
-        doCollisions(particles)
-
-        background(0, 0, 0);
+        //background(0, 0, 0);
         this.context.restore();
 
         //console.log(this.config.debug);
@@ -41,18 +39,14 @@ class gasSimUI extends UI {
         noStroke();
 
         // inject light particles
-        fill(globalConfig.buttonOff)
-        ellipse(this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1], 60, 60);
-        fill(this.config.l);
-        ellipse(this.config.lightInjectionButtonPos[0], this.config.lightInjectionButtonPos[1], 7, 7)
+        lightButton(this.config);
         let lightInjectionDistance = dist(mouseX, mouseY, this.config.lightInjectionButtonPos[0],
             this.config.lightInjectionButtonPos[1]);
         if (lightInjectionDistance <= 30 && mouseIsPressed) {
-                let lP = new lightParticle(this.config.linjectionX, this.config.linjectionY,
-                    this.config);
-                particles.push(lP);
-                this.config.lightParticles++;
-            }
+            let lP = new lightParticle(gasConfig.linjectionX, gasConfig.linjectionY, gasConfig);
+            particles.push(lP);
+            gasConfig.lightParticles++;
+        }
 
         // inject heavy particles
         fill (globalConfig.buttonOff)
@@ -138,4 +132,11 @@ class gasSimUI extends UI {
         //     text('' + mouseX + ', ' + mouseY, cursorTextPositionX, cursorTextPositionY);
         // }
     }
+}
+
+function lightButton (config) {
+    fill(globalConfig.buttonOff)
+    ellipse(config.lightInjectionButtonPos[0], config.lightInjectionButtonPos[1], 60, 60)
+    fill(config.l);
+    ellipse(config.lightInjectionButtonPos[0], config.lightInjectionButtonPos[1], 7, 7)
 }

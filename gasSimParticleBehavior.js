@@ -82,7 +82,7 @@ class particle {
     // a new velocity vector is made every frame
     // explain this more later
     let tempHeading = this.velocity.heading()
-    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature * 0.005) *
+    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature * 0.01) *
         this.getRelativeSpeedScalar())
     this.velocity.setHeading(tempHeading)
 
