@@ -1,58 +1,73 @@
 function doCollisions(arr) {
+  const bounceConstant = 0.10
   angleMode(DEGREES);
-  let pars = arr; // passed in array of all existing particles
-  for (let i = 0; i < pars.length; i++) {
+  for (let i = 0; i < arr.length; i++) {
     // iterate through the array
-    let p1 = pars[i]; // store the object at index i in the iteration above
+    let p1 = arr[i]; // store the object at index i in the iteration above
     //console.log(p1.prevX + ', ' + p1.prevY);
-    for (let n = 0; n < pars.length && n !== i; n++) {
+    for (let n = 0; n < arr.length && n !== i; n++) {
       /* we iterate through the array again once we are inside the loop so that every particle is checked against every
       other particle. In other words, for every object in the outer loop, we loop through the entirety of the rest of
       the particles and calculate any collisions */
-      let p2 = pars[n]; // store object index n
+      let p2 = arr[n]; // store object index n
       let combinedRadii = p1.getRad() + p2.getRad(); // calculate sum of the two radii
+      let dx = p2.position.x - p1.position.x;
+      let dy = p2.position.y - p2.position.y;
       let distance = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
-      //console.log("distance: " + distance);
+      //console.log("distance: " + distance);a
       // calculate distance between centers of each particle
       if (distance <= combinedRadii) {
 
+        let angle = atan2(dy, dx);
+        let targetX = p1.position.x + cos(angle) * combinedRadii;
+        let targetY = p1.position.y + sin(angle) * combinedRadii;
+        let ax = (targetX - p2.position.x) * bounceConstant;
+        let ay = (targetY - p2.position.y) * bounceConstant;
+        p1.velocity.x -= ax;
+        p1.velocity.y -= ay;
+        p2.velocity.x += ax;
+        p2.velocity.y += ay;
+
+
+        //console.log('velocity x: ' + p1.velocity.x + ' velocity y: ' + p1.velocity.y)
+        // console.log('velocity vector ' + p1.velocity)
 
         //if the distance between the two is less than the sum of their radii, they are intersecting
         // variables for physics equations
-        let t1 = p1.velocity.heading();
-        let t2 = p2.velocity.heading();
-        let m1 = p1.getMass();
-        let m2 = p2.getMass();
+        // let t1 = p1.velocity.heading();
+        // let t2 = p2.velocity.heading();
+        // let m1 = p1.getMass();
+        // let m2 = p2.getMass();
         //console.log("m1: " + m1 + " m2: " + m2 + " t1: " + t1 + " t2: " + t2);
 
-        let dx = p2.position.x - p1.position.x;
-        //let dx = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
-        // let dy = p2.position.y - p1.position.y;
-        let phi;
+        // let dx = p2.position.x - p1.position.x;
+        // //let dx = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
+        // // let dy = p2.position.y - p1.position.y;
+        // let phi;
 
-        if (dx === 0) {
-         phi = 90;
-        } else {
-          phi = p1.velocity.angleBetween(p2.velocity);
-        }
+        // if (dx === 0) {
+        //  phi = 90;
+        // } else {
+        //   phi = p1.velocity.angleBetween(p2.velocity);
+        // }
 
         // particle 1
-        let p1x = (p1.velocity.x * cos(t1 - phi) * (m1 - m2) + (2 * m2 * p2.velocity.x * cos(t2 - phi)) /
-            (m1 + m2)) * cos(phi) + p1.velocity.x * sin(t1 - phi * cos(phi + 90));
-        let p1y = (p1.velocity.y * cos(t1 - phi) * (m1 - m2) + (2 * m2 * p2.velocity.y * cos(t2 - phi)) /
-            (m1 + m2)) * sin(phi) + p1.velocity.y * sin(t1 - phi * sin(phi + 90));
-
-        p1.velocity.set(p1x, p1y);
-        p1.position.set(p1.prevX[p1.prevX.length - 2], p1.prevY[p1.prevX.length - 2]);
-
-        // particle 2
-        let p2x = (p2.velocity.x * cos(t2 - phi) * (m2 - m1) + (2 * m1 * p2.velocity.x * cos(t1 - phi)) /
-            (m2 + m1)) * cos(phi) + p2.velocity.x * sin(t2 - phi * cos(phi + 90));
-        let p2y = (p2.velocity.y * cos(t2 - phi) * (m2 - m1) + (2 * m1 * p2.velocity.y * cos(t1 - phi)) /
-            (m2 + m1)) * sin(phi) + p2.velocity.y * sin(t2 - phi * sin(phi + 90));
-
-        p2.velocity.set(p2x, p2y);
-        p2.position.set(p2.prevX[p2.prevX.length - 2], p2.prevY[p2.prevX.length - 2]);
+        // let p1x = (p1.velocity.x * cos(t1 - phi) * (m1 - m2) + (2 * m2 * p2.velocity.x * cos(t2 - phi)) /
+        //     (m1 + m2)) * cos(phi) + p1.velocity.x * sin(t1 - phi * cos(phi + 90));
+        // let p1y = (p1.velocity.y * cos(t1 - phi) * (m1 - m2) + (2 * m2 * p2.velocity.y * cos(t2 - phi)) /
+        //     (m1 + m2)) * sin(phi) + p1.velocity.y * sin(t1 - phi * sin(phi + 90));
+        //
+        // p1.velocity.set(p1x, p1y);
+        // p1.position.set(p1.prevX[p1.prevX.length - 2], p1.prevY[p1.prevX.length - 2]);
+        //
+        // // particle 2
+        // let p2x = (p2.velocity.x * cos(t2 - phi) * (m2 - m1) + (2 * m1 * p2.velocity.x * cos(t1 - phi)) /
+        //     (m2 + m1)) * cos(phi) + p2.velocity.x * sin(t2 - phi * cos(phi + 90));
+        // let p2y = (p2.velocity.y * cos(t2 - phi) * (m2 - m1) + (2 * m1 * p2.velocity.y * cos(t1 - phi)) /
+        //     (m2 + m1)) * sin(phi) + p2.velocity.y * sin(t2 - phi * sin(phi + 90));
+        //
+        // p2.velocity.set(p2x, p2y);
+        // p2.position.set(p2.prevX[p2.prevX.length - 2], p2.prevY[p2.prevX.length - 2]);
       }
     }
   }
@@ -85,7 +100,7 @@ class particle {
     // a new velocity vector is made every frame
     // explain this more later
     let tempHeading = this.velocity.heading()
-    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature * 0.005) *
+    this.velocity = p5.Vector.random2D().mult((this.config.boxTemperature * 0.01) *
         this.getRelativeSpeedScalar())
     this.velocity.setHeading(tempHeading)
 
@@ -131,6 +146,7 @@ class lightParticle extends particle { // since we have an abstraction above, we
     stroke(this.config.l);
     ellipse(this.position.x, this.position.y, this.getRad()*2);
     angleMode(DEGREES);
+    console.log('velocity vector ' + this.velocity)
   }
 
   getRad() {

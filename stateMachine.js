@@ -23,7 +23,6 @@ function setup() {
     context2d = canvas.getContext('2d');
 
     currentState = new gasSimulation(context2d, globalConfig);
-
 }
 
 function draw() {
@@ -38,4 +37,8 @@ function stateMachine(currentState) {
     // catch (error) {
     //   console.error("State machine returned error: " + error);
     // }
+}
+
+function mouseClicked () {
+
 }
